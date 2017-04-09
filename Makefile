@@ -9,15 +9,11 @@ UNITTESTS_PATH  :=  $(LIBROOT)/tests/unit-tests
 # path to the unit testing library Unity
 UNITY_PATH      := $(UNITTESTS_PATH)/unity
 
-# default routing implementation "spanning_tree"
-ROUTING         ?=  spanning_tree
-
 # specify the modules to build
-modules         :=  src/routing/$(ROUTING) src/metatable
+modules         :=  src/routing/spanning_tree
 
-# sources and module_libs will be filled by modules
+# sources will be filled by included Makefiles
 sources         :=
-module_libs     :=
 
 #generic variable to hold names of all binaries
 binaries        :=
@@ -31,11 +27,9 @@ include_dirs    :=  include
 
 ifneq (, $(filter clean unit-test, $(MAKECMDGOALS)))
 # set correct include path for unity when unit-testing
-include_dirs    :=  $(UNITY_PATH) $(include_dirs)
-# add unity to the sources
+include_dirs    +=  $(UNITY_PATH)
 unittests_src   :=  $(shell find $(UNITTESTS_PATH) -name 'unit-tests.c')
-sources         +=  $(UNITY_PATH)/unity.c $(unittests_src)
-unittests_bin   +=  $(unittests_src:%.c=%)
+unittests_bin   :=  $(unittests_src:%.c=%)
 binaries        +=  $(unittests_bin)
 endif
 
@@ -48,7 +42,7 @@ all:
 include $(addsuffix /module.mk, $(modules))
 
 # create $(LIBNAME).a from modules
-$(LIBNAME): $(module_libs)
+$(LIBNAME): $(objects)
 	$(AR) rcs $@ $^
 
 # build library by default
@@ -56,6 +50,7 @@ $(LIBNAME): $(module_libs)
 all: $(LIBNAME)
 
 .PHONY: unit-test
+unit-test: LDLIBS += $(LIBNAME)
 unit-test: $(LIBNAME) $(unittests_bin)
 
 $(unittests_bin) : % : $(UNITY_PATH)/unity.o %.o
@@ -63,7 +58,7 @@ $(unittests_bin) : % : $(UNITY_PATH)/unity.o %.o
 # clean slate
 .PHONY: clean
 clean:
-	$(RM) $(objects) $(module_libs) $(LIBNAME) $(dependencies) $(binaries)
+	$(RM) $(objects) $(LIBNAME) $(dependencies) $(binaries)
 
 ifneq "$(MAKECMDGOALS)" "clean"
     -include $(dependencies)
