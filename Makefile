@@ -14,7 +14,7 @@ UNITY_PATH      := $(UNITTESTS_PATH)/unity
 modules         :=  src/routing
 
 # sources will be filled by included Makefiles
-sources         :=
+sources         := $(wildcard $(modules:%=%/*.c))
 
 # transformations for object and dependency files
 objects         =   $(sources:%.c=%.o)
@@ -31,7 +31,8 @@ ifneq (, $(filter clean unit-test unit-test-run, $(MAKECMDGOALS)))
 include_dirs    +=  $(UNITY_PATH)
 unittests_src   :=  $(shell find $(UNITTESTS_PATH) -name 'unit-tests.c')
 unittests_bin   :=  $(unittests_src:%.c=%)
-rm_binaries     +=  $(unittests_src:%.c=%.o) $(unittests_bin)
+unity_obj       :=  $(UNITY_PATH)/unity.o
+rm_binaries     +=  $(unittests_src:%.c=%.o) $(unittests_bin) $(unity_obj)
 endif
 
 CFLAGS          +=  $(addprefix -I, $(include_dirs))
@@ -41,9 +42,6 @@ vpath %.h $(include_dirs)
 CFLAGS          +=  -MD -MP
 
 all:
-
-# include Makefiles of modules
-include $(addsuffix /module.mk, $(modules))
 
 # create dependency files
 $(dependencies): $(objects)
@@ -62,7 +60,7 @@ unit-test: LDLIBS += $(LIBNAME)
 unit-test: $(LIBNAME) $(unittests_bin)
 
 # static pattern to build all unit-tests with unity
-$(unittests_bin) : % : $(UNITY_PATH)/unity.o %.o
+$(unittests_bin) : % : $(unity_obj) %.o
 
 # run all unit tests
 .PHONY: unit-test-run
