@@ -1,4 +1,5 @@
 #include "unity.h"
+#include "routing/nam.h"
 #include "routing/pam.h"
 
 void setUp(void) {}
@@ -15,8 +16,16 @@ void test_pam_set_prefix(void) {
     TEST_ASSERT_EQUAL_STRING_LEN((char *) (pam + 1), test_prefix, TEST_PREFIX_LEN);
 }
 
+void test_nam_set_name(void) {
+    routing_nam_t *nam = (routing_nam_t *) buf;
+    routing_nam_set_name(nam, test_prefix, strlen(test_prefix));
+    TEST_ASSERT_EQUAL_UINT16(nam->name_len, TEST_PREFIX_LEN);
+    TEST_ASSERT_EQUAL_STRING_LEN((char *) (nam + 1), test_prefix, TEST_PREFIX_LEN);
+}
+
 int main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_pam_set_prefix);
+    RUN_TEST(test_nam_set_name);
     return UNITY_END();
 }
