@@ -26,7 +26,7 @@ rm_binaries     =   $(sources:%.c=%.o)
 # set correct include path for .h files
 include_dirs    :=  include
 
-ifneq (, $(filter clean unit-test, $(MAKECMDGOALS)))
+ifneq (, $(filter clean unit-test unit-test-run, $(MAKECMDGOALS)))
 # set correct include path for unity when unit-testing
 include_dirs    +=  $(UNITY_PATH)
 unittests_src   :=  $(shell find $(UNITTESTS_PATH) -name 'unit-tests.c')
@@ -63,6 +63,11 @@ unit-test: $(LIBNAME) $(unittests_bin)
 
 # static pattern to build all unit-tests with unity
 $(unittests_bin) : % : $(UNITY_PATH)/unity.o %.o
+
+# run all unit tests
+.PHONY: unit-test-run
+unit-test-run: unit-test
+	@ for u in $(unittests_bin); do $$u; done
 
 # clean slate
 .PHONY: clean
