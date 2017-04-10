@@ -7,6 +7,7 @@
  */
 
 #include "unity.h"
+#include "routing/mst.h"
 #include "routing/nam.h"
 #include "routing/pam.h"
 
@@ -17,23 +18,36 @@ void tearDown(void) {}
 static const char test_prefix[TEST_PREFIX_LEN] = "/HAW/t/te/tes/test";
 static char buf[sizeof(compas_pam_t) + TEST_PREFIX_LEN];
 
-void test_compas_pam_set_prefix(void) {
+void test_compas_pam_set_prefix(void)
+{
     compas_pam_t *pam = (compas_pam_t *) buf;
-    compas_pam_set_prefix(pam, test_prefix, strlen(test_prefix));
+    compas_pam_set_prefix(pam, test_prefix, TEST_PREFIX_LEN);
     TEST_ASSERT_EQUAL_UINT16(pam->prefix_len, TEST_PREFIX_LEN);
     TEST_ASSERT_EQUAL_STRING_LEN((char *) (pam + 1), test_prefix, TEST_PREFIX_LEN);
 }
 
-void test_compas_nam_set_name(void) {
+void test_compas_nam_set_name(void)
+{
     compas_nam_t *nam = (compas_nam_t *) buf;
-    compas_nam_set_name(nam, test_prefix, strlen(test_prefix));
+    compas_nam_set_name(nam, test_prefix, TEST_PREFIX_LEN);
     TEST_ASSERT_EQUAL_UINT16(nam->name_len, TEST_PREFIX_LEN);
     TEST_ASSERT_EQUAL_STRING_LEN((char *) (nam + 1), test_prefix, TEST_PREFIX_LEN);
+}
+
+void test_compas_mst_init_root(void)
+{
+    compas_mst_t mst;
+    compas_mst_init_root(&mst, test_prefix, TEST_PREFIX_LEN);
+    TEST_ASSERT_TRUE(mst.root);
+    TEST_ASSERT_EQUAL_UINT16(mst.rank, 0);
+    TEST_ASSERT_EQUAL_UINT16(mst.prefix_len, TEST_PREFIX_LEN);
+    TEST_ASSERT_EQUAL_STRING_LEN(mst.prefix, test_prefix, TEST_PREFIX_LEN);
 }
 
 int main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_compas_pam_set_prefix);
     RUN_TEST(test_compas_nam_set_name);
+    RUN_TEST(test_compas_mst_init_root);
     return UNITY_END();
 }

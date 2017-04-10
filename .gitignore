@@ -2,4 +2,4 @@
 *.d
 *.o
 *.swp
-tests/**/unit-tests
+tests/unit-tests/*/unit-tests
