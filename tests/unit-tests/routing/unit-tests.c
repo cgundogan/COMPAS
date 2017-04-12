@@ -7,7 +7,7 @@
  */
 
 #include "unity.h"
-#include "routing/mst.h"
+#include "routing/dodag.h"
 #include "routing/nam.h"
 #include "routing/pam.h"
 
@@ -34,20 +34,20 @@ void test_compas_nam_set_name(void)
     TEST_ASSERT_EQUAL_STRING_LEN((char *) (nam + 1), test_prefix, TEST_PREFIX_LEN);
 }
 
-void test_compas_mst_init_root(void)
+void test_compas_dodag_init_root(void)
 {
-    compas_mst_t mst;
-    compas_mst_init_root(&mst, test_prefix, TEST_PREFIX_LEN);
-    TEST_ASSERT_TRUE(mst.root);
-    TEST_ASSERT_EQUAL_UINT16(mst.rank, 0);
-    TEST_ASSERT_EQUAL_UINT16(mst.prefix_len, TEST_PREFIX_LEN);
-    TEST_ASSERT_EQUAL_STRING_LEN(mst.prefix, test_prefix, TEST_PREFIX_LEN);
+    compas_dodag_t dodag;
+    compas_dodag_init_root(&dodag, test_prefix, TEST_PREFIX_LEN);
+    TEST_ASSERT_TRUE(dodag.root);
+    TEST_ASSERT_EQUAL_UINT16(dodag.rank, 0);
+    TEST_ASSERT_EQUAL_UINT16(dodag.prefix_len, TEST_PREFIX_LEN);
+    TEST_ASSERT_EQUAL_STRING_LEN(dodag.prefix, test_prefix, TEST_PREFIX_LEN);
 }
 
 int main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_compas_pam_set_prefix);
     RUN_TEST(test_compas_nam_set_name);
-    RUN_TEST(test_compas_mst_init_root);
+    RUN_TEST(test_compas_dodag_init_root);
     return UNITY_END();
 }

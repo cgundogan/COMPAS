@@ -14,7 +14,7 @@ typedef struct {
     uint16_t rank;
     const char *prefix;
     uint16_t prefix_len;
-} compas_mst_t;
+} compas_dodag_t;
 
-void compas_mst_init_root(compas_mst_t *mst, const char *prefix,
-                          uint16_t prefix_len);
+void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
+                            uint16_t prefix_len);
