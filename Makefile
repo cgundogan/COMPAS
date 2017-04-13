@@ -68,10 +68,16 @@ $(unittests_bin) : % : $(unity_obj) %.o
 unit-test-run: unit-test
 	@ for u in $(unittests_bin); do $$u; done
 
+# create documentation
+.PHONY: doc
+doc:
+	doxygen Doxyfile
+
 # clean slate
 .PHONY: clean
 clean:
 	$(RM) $(rm_binaries) $(LIBNAME) $(dependencies)
+	$(RM)r doc/*
 
 ifneq "$(MAKECMDGOALS)" "clean"
     include $(dependencies)

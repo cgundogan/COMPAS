@@ -2,4 +2,5 @@
 *.d
 *.o
 *.swp
+doc
 tests/unit-tests/*/unit-tests
