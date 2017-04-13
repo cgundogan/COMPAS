@@ -7,9 +7,9 @@
  */
 
 #include "unity.h"
-#include "routing/dodag.h"
-#include "routing/nam.h"
-#include "routing/pam.h"
+#include "compas/routing/dodag.h"
+#include "compas/routing/nam.h"
+#include "compas/routing/pam.h"
 
 void setUp(void) {}
 void tearDown(void) {}

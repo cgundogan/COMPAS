@@ -6,7 +6,7 @@
  * directory for more details.
  */
 
-#include "routing/dodag.h"
+#include "compas/routing/dodag.h"
 
 void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
                             uint16_t prefix_len)

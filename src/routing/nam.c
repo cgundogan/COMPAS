@@ -6,7 +6,7 @@
  * directory for more details.
  */
 
-#include "routing/nam.h"
+#include "compas/routing/nam.h"
 
 void compas_nam_set_name(compas_nam_t *nam, const char *name,
                          uint16_t name_len)

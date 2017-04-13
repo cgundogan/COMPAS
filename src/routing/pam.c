@@ -6,7 +6,7 @@
  * directory for more details.
  */
 
-#include "routing/pam.h"
+#include "compas/routing/pam.h"
 
 void compas_pam_set_prefix(compas_pam_t *pam, const char *prefix,
                            uint16_t prefix_len)
