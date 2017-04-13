@@ -32,6 +32,7 @@ include_dirs    +=  $(UNITY_PATH)
 unittests_src   :=  $(shell find $(UNITTESTS_PATH) -name 'unit-tests.c')
 unittests_bin   :=  $(unittests_src:%.c=%)
 unity_obj       :=  $(UNITY_PATH)/unity.o
+dependencies    +=  $(unittests_src:%.c=%.d) $(unity_obj:%.o=%.d)
 rm_binaries     +=  $(unittests_src:%.c=%.o) $(unittests_bin) $(unity_obj)
 endif
 
