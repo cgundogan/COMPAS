@@ -11,8 +11,7 @@
 void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
                             uint16_t prefix_len)
 {
-    dodag->root = true;
-    dodag->rank = 0;
+    dodag->rank = COMPAS_DODAG_ROOT_RANK;
     dodag->prefix = prefix;
     dodag->prefix_len = prefix_len;
 }

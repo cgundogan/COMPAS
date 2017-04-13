@@ -6,11 +6,11 @@
  * directory for more details.
  */
 
-#include <stdbool.h>
 #include <stdint.h>
 
+#define COMPAS_DODAG_ROOT_RANK      (1)
+
 typedef struct {
-    bool root;
     uint16_t rank;
     const char *prefix;
     uint16_t prefix_len;
