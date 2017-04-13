@@ -8,9 +8,13 @@
 
 #include "compas/routing/pam.h"
 
-void compas_pam_set_prefix(compas_pam_t *pam, const char *prefix,
-                           uint16_t prefix_len)
+void compas_pam_set_prefix(compas_dodag_t *dodag, compas_pam_t *pam)
 {
-    pam->prefix_len = prefix_len;
-    memcpy(pam + 1, prefix, prefix_len);
+    pam->prefix_len = dodag->prefix_len;
+    memcpy(pam + 1, dodag->prefix, dodag->prefix_len);
+}
+
+void compas_pam_create(compas_dodag_t *dodag, compas_pam_t *pam)
+{
+	compas_pam_set_prefix(dodag, pam);
 }
