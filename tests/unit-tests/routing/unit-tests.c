@@ -26,22 +26,13 @@ void test_compas_dodag_init_root(void)
     TEST_ASSERT_EQUAL_STRING_LEN(dodag.prefix, test_prefix, TEST_PREFIX_LEN);
 }
 
-void test_compas_pam_set_prefix(void)
-{
-    compas_dodag_t dodag;
-    compas_dodag_init_root(&dodag, test_prefix, TEST_PREFIX_LEN);
-    compas_pam_t *pam = (compas_pam_t *) buf;
-    compas_pam_set_prefix(&dodag, pam);
-    TEST_ASSERT_EQUAL_UINT16(pam->prefix_len, TEST_PREFIX_LEN);
-    TEST_ASSERT_EQUAL_STRING_LEN((char *) (pam + 1), test_prefix, TEST_PREFIX_LEN);
-}
-
 void test_compas_pam_create(void)
 {
     compas_dodag_t dodag;
     compas_dodag_init_root(&dodag, test_prefix, TEST_PREFIX_LEN);
     compas_pam_t *pam = (compas_pam_t *) buf;
     compas_pam_create(&dodag, pam);
+    TEST_ASSERT_EQUAL_UINT16(pam->rank, COMPAS_DODAG_ROOT_RANK);
     TEST_ASSERT_EQUAL_UINT16(pam->prefix_len, TEST_PREFIX_LEN);
     TEST_ASSERT_EQUAL_STRING_LEN((char *) (pam + 1), test_prefix, TEST_PREFIX_LEN);
 }
@@ -66,7 +57,6 @@ void test_compas_nam_set_name(void)
 int main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_compas_dodag_init_root);
-    RUN_TEST(test_compas_pam_set_prefix);
     RUN_TEST(test_compas_pam_create);
     RUN_TEST(test_compas_pam_len);
     RUN_TEST(test_compas_nam_set_name);
