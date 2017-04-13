@@ -15,5 +15,6 @@ typedef struct __attribute__((packed)) {
     uint16_t prefix_len;        /**< length of the prefix in bytes */
 } compas_pam_t;
 
-void compas_pam_set_prefix(compas_dodag_t *dodag, compas_pam_t *pam);
 void compas_pam_create(compas_dodag_t *dodag, compas_pam_t *pam);
+size_t compas_pam_len(compas_dodag_t *dodag);
+void compas_pam_set_prefix(compas_dodag_t *dodag, compas_pam_t *pam);
