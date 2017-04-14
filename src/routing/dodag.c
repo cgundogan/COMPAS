@@ -6,12 +6,16 @@
  * directory for more details.
  */
 
+#include <string.h>
+
 #include "compas/routing/dodag.h"
 
 void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
                             uint16_t prefix_len)
 {
     dodag->rank = COMPAS_DODAG_ROOT_RANK;
-    dodag->prefix = prefix;
+    memcpy(dodag->prefix, prefix,
+           (prefix_len < COMPAS_PREFIX_LEN) ? prefix_len : COMPAS_PREFIX_LEN);
     dodag->prefix_len = prefix_len;
+    memset(&dodag->parent, 0, sizeof(compas_parent_t));
 }

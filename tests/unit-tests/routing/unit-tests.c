@@ -16,6 +16,8 @@ void tearDown(void) {}
 #define TEST_PREFIX_LEN (18)
 static const char test_prefix[TEST_PREFIX_LEN] = "/HAW/t/te/tes/test";
 static char buf[sizeof(compas_pam_t) + TEST_PREFIX_LEN];
+static const uint8_t face_addr[] = { 0x00, 0x01, 0x02, 0x03, \
+                                     0x04, 0x05, 0x06, 0x07 };
 
 void test_compas_dodag_init_root(void)
 {
@@ -53,9 +55,20 @@ void test_compas_pam_parse(void)
     compas_dodag_init_root(&dodag1, test_prefix, TEST_PREFIX_LEN);
     compas_pam_t *pam = (compas_pam_t *) buf;
     compas_pam_create(&dodag1, pam);
-    compas_pam_parse(&dodag2, pam);
+    uint8_t face_addr_len = sizeof(face_addr)/sizeof(face_addr[0]);
+    TEST_ASSERT_EQUAL_INT(0, compas_pam_parse(&dodag2, pam,
+                                              face_addr, face_addr_len));
     TEST_ASSERT_EQUAL_UINT16(dodag1.prefix_len, dodag2.prefix_len);
     TEST_ASSERT_EQUAL_STRING_LEN(dodag1.prefix, dodag2.prefix, dodag1.prefix_len);
+    TEST_ASSERT_EQUAL_UINT16(dodag1.rank + 1, dodag2.rank);
+    TEST_ASSERT_EQUAL_UINT8(face_addr_len, dodag2.parent.face_addr_len);
+    TEST_ASSERT_EQUAL_UINT8_ARRAY(face_addr, dodag2.parent.face_addr, face_addr_len);
+    TEST_ASSERT_EQUAL_INT(-2, compas_pam_parse(&dodag2, pam,
+                                               face_addr, face_addr_len));
+    memset(&dodag2, 0, sizeof(dodag2));
+    pam->rank = UINT16_MAX;
+    TEST_ASSERT_EQUAL_INT(-1, compas_pam_parse(&dodag2, pam,
+                                               face_addr, face_addr_len));
 }
 
 void test_compas_nam_set_name(void)

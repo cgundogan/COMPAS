@@ -29,12 +29,37 @@
 #define COMPAS_DODAG_ROOT_RANK      (1)
 
 /**
+ * @brief Max. length of a prefix
+ */
+#ifndef COMPAS_PREFIX_LEN
+#define COMPAS_PREFIX_LEN           (32)
+#endif
+
+/**
+ * @brief Max. length of a face address
+ */
+#ifndef COMPAS_FACE_ADDR_LEN
+#define COMPAS_FACE_ADDR_LEN        (8)
+#endif
+
+/**
+ * @brief Immediate parent in the DODAG
+ */
+typedef struct {
+    /** Face address of this parent (e.g. L2 address) */
+    uint8_t face_addr[COMPAS_FACE_ADDR_LEN];
+    uint8_t face_addr_len;      /**< Length of @ref face_addr */
+} compas_parent_t;
+
+/**
  * @brief DODAG definition
  */
 typedef struct {
     uint16_t rank;              /**< Rank of the node */
-    const char *prefix;         /**< Default prefix of this DODAG */
-    uint16_t prefix_len;        /**< Length of the default prefix */
+    /** Default prefix of this DODAG */
+    char prefix[COMPAS_PREFIX_LEN];
+    uint16_t prefix_len;        /**< Length of @ref prefix */
+    compas_parent_t parent;     /**< Immediate parent in the DODAG */
 } compas_dodag_t;
 
 /**

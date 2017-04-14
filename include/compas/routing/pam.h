@@ -17,14 +17,14 @@
 #define COMPAS_ROUTING_PAM_H
 
 #include <stdint.h>
-#include <string.h>
 
 #include "compas/routing/dodag.h"
 
 /**
  * @brief PAM packet definition
  *
- * The name prefix follows this struct immediately.
+ * The name prefix follows this struct immediately and is of length
+ * @ref prefix_len.
  */
 typedef struct __attribute__((packed)) {
     uint16_t rank;              /**< Rank of the sender */
@@ -55,10 +55,13 @@ size_t compas_pam_len(compas_dodag_t *dodag);
  *
  * @param[out]  dodag           Pointer to the DODAG
  * @param[in]   pam             Pointer to PAM to parse from
+ * @param[in]   face_addr       Face address (e.g. L2 address)
+ * @param[in]   face_addr_len   Length of face address @p face_addr
  *
  * @return      0, on success
  * @return      otherwise, on failure
  */
-int compas_pam_parse(compas_dodag_t *dodag, compas_pam_t *pam);
+int compas_pam_parse(compas_dodag_t *dodag, compas_pam_t *pam,
+                     const uint8_t *face_addr, uint8_t face_addr_len);
 
 #endif /* COMPAS_ROUTING_PAM_H */
