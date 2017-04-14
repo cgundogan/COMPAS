@@ -10,7 +10,11 @@
  * @file pam.h
  * @brief Prefix Advertisement Message (PAM) definitions for COMPAS
  * @author Cenk Gündoğan <mail-github@cgundogan.de>
+ * @copyright GNU Lesser General Public License v2.1
  */
+
+#ifndef COMPAS_ROUTING_PAM_H
+#define COMPAS_ROUTING_PAM_H
 
 #include <stdint.h>
 #include <string.h>
@@ -28,7 +32,7 @@ typedef struct __attribute__((packed)) {
 } compas_pam_t;
 
 /**
- * @brief Create a PAM
+ * @brief Create a PAM in @p pam
  *
  * @param[in]   dodag           Pointer to the DODAG
  * @param[out]  pam             Pointer to the PAM to fill
@@ -36,10 +40,25 @@ typedef struct __attribute__((packed)) {
 void compas_pam_create(compas_dodag_t *dodag, compas_pam_t *pam);
 
 /**
- * @brief Get length of PAM
+ * @brief Get length needed for a PAM
  *
  * @param[in]   dodag           Pointer to the DODAG
  *
  * @return      The length of the PAM to be created
  */
 size_t compas_pam_len(compas_dodag_t *dodag);
+
+/**
+ * @brief Parse PAM @p pam into DODAG @p dodag
+ *
+ * If @f$pam_{rank} >= dodag_{rank}@f$, then @p pam will not be parsed.
+ *
+ * @param[out]  dodag           Pointer to the DODAG
+ * @param[in]   pam             Pointer to PAM to parse from
+ *
+ * @return      0, on success
+ * @return      otherwise, on failure
+ */
+int compas_pam_parse(compas_dodag_t *dodag, compas_pam_t *pam);
+
+#endif /* COMPAS_ROUTING_PAM_H */

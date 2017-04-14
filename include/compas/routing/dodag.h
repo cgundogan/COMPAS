@@ -10,9 +10,18 @@
  * @file dodag.h
  * @brief DODAG definitions for COMPAS
  * @author Cenk Gündoğan <mail-github@cgundogan.de>
+ * @copyright GNU Lesser General Public License v2.1
  */
 
+#ifndef COMPAS_ROUTING_DODAG_H
+#define COMPAS_ROUTING_DODAG_H
+
 #include <stdint.h>
+
+/**
+ * @brief Default rank when not part of a DODAG
+ */
+#define COMPAS_DODAG_UNDEF          (0)
 
 /**
  * @brief Rank of the DODAG root
@@ -37,3 +46,5 @@ typedef struct {
  */
 void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
                             uint16_t prefix_len);
+
+#endif /* COMPAS_ROUTING_DODAG_H */

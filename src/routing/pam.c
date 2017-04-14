@@ -6,6 +6,7 @@
  * directory for more details.
  */
 
+#include "compas/debug.h"
 #include "compas/routing/pam.h"
 
 void compas_pam_create(compas_dodag_t *dodag, compas_pam_t *pam)
@@ -21,4 +22,12 @@ size_t compas_pam_len(compas_dodag_t *dodag)
     len  += sizeof(compas_pam_t);
     len  += dodag->prefix_len;
     return len;
+}
+
+int compas_pam_parse(compas_dodag_t *dodag, compas_pam_t *pam)
+{
+    if (pam->rank >= dodag->rank) {
+        CDBG_PRINT("PAM: ignore PAM of higher or equal rank\n");
+    }
+    return 0;
 }

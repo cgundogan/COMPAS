@@ -10,7 +10,11 @@
  * @file nam.h
  * @brief Name Advertisement Message (NAM) definitions for COMPAS
  * @author Cenk Gündoğan <mail-github@cgundogan.de>
+ * @copyright GNU Lesser General Public License v2.1
  */
+
+#ifndef COMPAS_ROUTING_NAM_H
+#define COMPAS_ROUTING_NAM_H
 
 #include <stdint.h>
 #include <string.h>
@@ -31,3 +35,5 @@ typedef struct __attribute__((packed)) {
  */
 void compas_nam_set_name(compas_nam_t *nam, const char *name,
                          uint16_t name_len);
+
+#endif /* COMPAS_ROUTING_NAM_H */
