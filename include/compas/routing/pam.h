@@ -27,6 +27,7 @@
  * @ref prefix_len.
  */
 typedef struct __attribute__((packed)) {
+    uint8_t type;               /**< Message type of a PAM */
     uint16_t rank;              /**< Rank of the sender */
     uint16_t prefix_len;        /**< Length of the prefix */
 } compas_pam_t;

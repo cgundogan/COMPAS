@@ -43,6 +43,22 @@
 #endif
 
 /**
+ * @name Message types
+ * Each message is differentiated by a message type
+ * @{
+ */
+/**
+ * @brief Message type for PAM
+ */
+#define COMPAS_MSG_TYPE_PAM         (0xC0)
+
+/**
+ * @brief Message type for NAM
+ */
+#define COMPAS_MSG_TYPE_NAM         (0xC1)
+/** @} */
+
+/**
  * @brief Immediate parent in the DODAG
  */
 typedef struct {

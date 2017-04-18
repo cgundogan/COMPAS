@@ -13,6 +13,7 @@
 
 void compas_pam_create(compas_dodag_t *dodag, compas_pam_t *pam)
 {
+    pam->type = COMPAS_MSG_TYPE_PAM;
     pam->rank = dodag->rank;
     pam->prefix_len = dodag->prefix_len;
     memcpy(pam + 1, dodag->prefix, dodag->prefix_len);
