@@ -8,6 +8,7 @@
 
 #include <string.h>
 
+#include "compas/debug.h"
 #include "compas/routing/dodag.h"
 
 void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
@@ -18,4 +19,19 @@ void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
            (prefix_len < COMPAS_PREFIX_LEN) ? prefix_len : COMPAS_PREFIX_LEN);
     dodag->prefix_len = prefix_len;
     memset(&dodag->parent, 0, sizeof(compas_parent_t));
+}
+
+void compas_dodag_print(compas_dodag_t *dodag)
+{
+    CDBG_PRINT("rank: %u - prefix: %.*s - prefix_len: %u - ",
+               (unsigned) dodag->rank, dodag->prefix_len, dodag->prefix,
+               (unsigned) dodag->prefix_len);
+
+    CDBG_PRINT("parent_addr_len: %u - parent_addr: ", (unsigned) dodag->parent.face_addr_len);
+
+    for (unsigned i = 0; i < dodag->parent.face_addr_len; i++) {
+        CDBG_PRINT("%02x ", dodag->parent.face_addr[i]);
+    }
+
+    CDBG_PRINT("\n");
 }

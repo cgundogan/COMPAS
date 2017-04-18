@@ -96,4 +96,12 @@ typedef struct {
 void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
                             uint16_t prefix_len);
 
+/**
+ * @brief Print DODAG to stdout
+ * @note Requires @ref COMPAS_DEBUG @f$\neq 0@f$
+ *
+ * @param[in]   dodag           Pinter to the DODAG
+ */
+void compas_dodag_print(compas_dodag_t *dodag);
+
 #endif /* COMPAS_ROUTING_DODAG_H */
