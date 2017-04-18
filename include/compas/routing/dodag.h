@@ -19,6 +19,14 @@
 #include <stdint.h>
 
 /**
+ * @brief Specify on compile time whether this node should be initialized as
+ * DODAG root
+ */
+#ifndef COMPAS_RUN_AS_DODAG_ROOT
+#define COMPAS_RUN_AS_DODAG_ROOT    (0)
+#endif
+
+/**
  * @brief Default rank when not part of a DODAG
  */
 #define COMPAS_DODAG_UNDEF          (0)
