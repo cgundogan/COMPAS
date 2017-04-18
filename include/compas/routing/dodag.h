@@ -67,13 +67,6 @@
 /** @} */
 
 /**
- * @brief Number of DODAGs to pre-allocate
- */
-#ifndef COMPAS_DODAG_NUMOF
-#define COMPAS_DODAG_NUMOF          (1)
-#endif
-
-/**
  * @brief Immediate parent in the DODAG
  */
 typedef struct {
@@ -102,10 +95,5 @@ typedef struct {
  */
 void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
                             uint16_t prefix_len);
-
-/**
- * @brief Pre-allocated dodag structs
- */
-extern compas_dodag_t compas_dodags[COMPAS_DODAG_NUMOF];
 
 #endif /* COMPAS_ROUTING_DODAG_H */
