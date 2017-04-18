@@ -35,7 +35,7 @@ int compas_pam_parse(compas_dodag_t *dodag, compas_pam_t *pam,
         return -1;
     }
 
-    if ((pam->rank + 1) >= dodag->rank) {
+    if ((dodag->rank != COMPAS_DODAG_UNDEF) && (pam->rank + 1) >= dodag->rank) {
         CDBG_PRINT("compas_pam_parse: ignore PAM of higher or equal rank\n");
         return -2;
     }
