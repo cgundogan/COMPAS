@@ -22,9 +22,8 @@
 
 /**
  * @brief PAM packet definition
- *
- * The name prefix follows this struct immediately and is of length
- * @ref prefix_len.
+ * @note The name prefix follows this struct immediately and is of length
+ * compas_pam_t::prefix_len.
  */
 typedef struct __attribute__((packed)) {
     uint8_t type;               /**< Message type of a PAM */
@@ -38,7 +37,7 @@ typedef struct __attribute__((packed)) {
  * @param[in]   dodag           Pointer to the DODAG
  * @param[out]  pam             Pointer to the PAM to fill
  */
-void compas_pam_create(compas_dodag_t *dodag, compas_pam_t *pam);
+void compas_pam_create(const compas_dodag_t *dodag, compas_pam_t *pam);
 
 /**
  * @brief Get length needed for a PAM
@@ -47,7 +46,7 @@ void compas_pam_create(compas_dodag_t *dodag, compas_pam_t *pam);
  *
  * @return      The length of the PAM to be created
  */
-size_t compas_pam_len(compas_dodag_t *dodag);
+size_t compas_pam_len(const compas_dodag_t *dodag);
 
 /**
  * @brief Parse PAM @p pam into DODAG @p dodag
@@ -62,7 +61,7 @@ size_t compas_pam_len(compas_dodag_t *dodag);
  * @return      0, on success
  * @return      otherwise, on failure
  */
-int compas_pam_parse(compas_dodag_t *dodag, compas_pam_t *pam,
+int compas_pam_parse(compas_dodag_t *dodag, const compas_pam_t *pam,
                      const uint8_t *face_addr, uint8_t face_addr_len);
 
 #endif /* COMPAS_ROUTING_PAM_H */

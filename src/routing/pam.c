@@ -11,7 +11,7 @@
 #include "compas/debug.h"
 #include "compas/routing/pam.h"
 
-void compas_pam_create(compas_dodag_t *dodag, compas_pam_t *pam)
+void compas_pam_create(const compas_dodag_t *dodag, compas_pam_t *pam)
 {
     pam->type = COMPAS_MSG_TYPE_PAM;
     pam->rank = dodag->rank;
@@ -19,7 +19,7 @@ void compas_pam_create(compas_dodag_t *dodag, compas_pam_t *pam)
     memcpy(pam + 1, dodag->prefix, dodag->prefix_len);
 }
 
-size_t compas_pam_len(compas_dodag_t *dodag)
+size_t compas_pam_len(const compas_dodag_t *dodag)
 {
     size_t len = 0;
     len  += sizeof(compas_pam_t);
@@ -27,7 +27,7 @@ size_t compas_pam_len(compas_dodag_t *dodag)
     return len;
 }
 
-int compas_pam_parse(compas_dodag_t *dodag, compas_pam_t *pam,
+int compas_pam_parse(compas_dodag_t *dodag, const compas_pam_t *pam,
                      const uint8_t *face_addr, uint8_t face_addr_len)
 {
     if (pam->rank == UINT16_MAX) {

@@ -72,7 +72,7 @@
 typedef struct {
     /** Face address of this parent (e.g. L2 address) */
     uint8_t face_addr[COMPAS_FACE_ADDR_LEN];
-    uint8_t face_addr_len;      /**< Length of @ref face_addr */
+    uint8_t face_addr_len;      /**< Length of compas_parent_t::face_addr */
 } compas_parent_t;
 
 /**
@@ -82,7 +82,7 @@ typedef struct {
     uint16_t rank;              /**< Rank of the node */
     /** Default prefix of this DODAG */
     char prefix[COMPAS_PREFIX_LEN];
-    uint16_t prefix_len;        /**< Length of @ref prefix */
+    uint16_t prefix_len;        /**< Length of compas_dodag_t::prefix */
     compas_parent_t parent;     /**< Immediate parent in the DODAG */
 } compas_dodag_t;
 
