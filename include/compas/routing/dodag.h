@@ -87,6 +87,13 @@ typedef struct {
 } compas_dodag_t;
 
 /**
+ * @brief COMPAS messsage definition
+ */
+typedef struct __attribute__((packed)) {
+    uint8_t type;               /**< Message type of a compas messsage */
+} compas_message_t;
+
+/**
  * @brief Initialize DODAG root
  *
  * @param[in]   dodag           Pointer to the DODAG
