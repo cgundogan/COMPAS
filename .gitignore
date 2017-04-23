@@ -2,5 +2,6 @@
 *.d
 *.o
 *.swp
+compile_commands.json
 doc
 tests/unit-tests/*/unit-tests

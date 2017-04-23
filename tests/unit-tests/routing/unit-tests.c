@@ -6,6 +6,8 @@
  * directory for more details.
  */
 
+#include <string.h>
+
 #include "unity.h"
 #include "compas/routing/nam.h"
 #include "compas/routing/pam.h"
@@ -13,7 +15,8 @@
 #define TEST_PREFIX_LEN (18)
 static const char test_prefix[TEST_PREFIX_LEN] = "/HAW/t/te/tes/test";
 static char buf_pam[sizeof(compas_pam_t) + TEST_PREFIX_LEN];
-static char buf_nam[sizeof(compas_nam_t) + TEST_PREFIX_LEN];
+static char buf_nam[sizeof(compas_nam_t) + 3 * sizeof(compas_tlv_t) + \
+                    sizeof(uint16_t) + 2 * TEST_PREFIX_LEN];
 static const uint8_t face_addr[] = { 0x00, 0x01, 0x02, 0x03, \
                                      0x04, 0x05, 0x06, 0x07 };
 
@@ -80,10 +83,49 @@ void test_compas_pam_parse(void)
 void test_compas_nam_create(void)
 {
     compas_nam_t *nam = (compas_nam_t *) buf_nam;
-    compas_nam_create(test_prefix, TEST_PREFIX_LEN, nam);
+    compas_nam_create(nam);
     TEST_ASSERT_EQUAL_UINT8(nam->type, COMPAS_MSG_TYPE_NAM);
-    TEST_ASSERT_EQUAL_UINT16(nam->name_len, TEST_PREFIX_LEN);
-    TEST_ASSERT_EQUAL_STRING_LEN((char *) (nam + 1), test_prefix, TEST_PREFIX_LEN);
+    TEST_ASSERT_EQUAL_UINT16(0, nam->len);
+}
+
+void test_compas_nam_tlv_add_name(void)
+{
+    compas_nam_t *nam = (compas_nam_t *) buf_nam;
+    compas_nam_create(nam);
+    compas_nam_tlv_add_name(nam, test_prefix, TEST_PREFIX_LEN);
+    TEST_ASSERT_EQUAL_UINT16(sizeof(compas_tlv_t) + TEST_PREFIX_LEN, nam->len);
+    compas_nam_tlv_add_name(nam, test_prefix, TEST_PREFIX_LEN);
+    TEST_ASSERT_EQUAL_UINT16(2 * sizeof(compas_tlv_t) + 2 * TEST_PREFIX_LEN,
+                             nam->len);
+}
+
+void test_compas_nam_tlv_add_lifetime(void)
+{
+    compas_nam_t *nam = (compas_nam_t *) buf_nam;
+    compas_nam_create(nam);
+    compas_nam_tlv_add_lifetime(nam, 100U);
+    TEST_ASSERT_EQUAL_UINT16(sizeof(compas_tlv_t) + sizeof(uint16_t), nam->len);
+}
+
+void test_compas_nam_tlv_iter(void)
+{
+    compas_nam_t *nam = (compas_nam_t *) buf_nam;
+    compas_nam_create(nam);
+    compas_nam_tlv_add_lifetime(nam, 100U);
+    compas_nam_tlv_add_name(nam, test_prefix, TEST_PREFIX_LEN);
+    compas_nam_tlv_add_name(nam, test_prefix, TEST_PREFIX_LEN);
+    TEST_ASSERT_EQUAL_UINT16(3 * sizeof(compas_tlv_t) + sizeof(uint16_t) +
+                             2 * TEST_PREFIX_LEN, nam->len);
+    uint16_t offset = 0;
+    compas_tlv_t *tlv;
+    TEST_ASSERT_TRUE(compas_nam_tlv_iter(nam, &offset, &tlv));
+    TEST_ASSERT_EQUAL_UINT8(COMPAS_TLV_LIFETIME, tlv->type);
+    TEST_ASSERT_EQUAL_UINT16(sizeof(compas_tlv_t) + sizeof(uint16_t), offset);
+    TEST_ASSERT_TRUE(compas_nam_tlv_iter(nam, &offset, &tlv));
+    TEST_ASSERT_EQUAL_UINT8(COMPAS_TLV_NAME, tlv->type);
+    TEST_ASSERT_TRUE(compas_nam_tlv_iter(nam, &offset, &tlv));
+    TEST_ASSERT_EQUAL_UINT8(COMPAS_TLV_NAME, tlv->type);
+    TEST_ASSERT_FALSE(compas_nam_tlv_iter(nam, &offset, &tlv));
 }
 
 void test_compas_nam_parse(void)
@@ -91,7 +133,7 @@ void test_compas_nam_parse(void)
     compas_nam_t *nam = (compas_nam_t *) buf_nam;
     uint16_t name_len;
     char test_name[TEST_PREFIX_LEN];
-    compas_nam_create(test_prefix, TEST_PREFIX_LEN, nam);
+    compas_nam_create(nam);
     compas_nam_parse(test_name, &name_len, nam);
     TEST_ASSERT_EQUAL_UINT16(name_len, TEST_PREFIX_LEN);
     TEST_ASSERT_EQUAL_STRING_LEN(test_name, test_prefix, TEST_PREFIX_LEN);
@@ -104,6 +146,9 @@ int main(void) {
     RUN_TEST(test_compas_pam_len);
     RUN_TEST(test_compas_pam_parse);
     RUN_TEST(test_compas_nam_create);
-    RUN_TEST(test_compas_nam_parse);
+    RUN_TEST(test_compas_nam_tlv_add_name);
+    RUN_TEST(test_compas_nam_tlv_add_lifetime);
+    RUN_TEST(test_compas_nam_tlv_iter);
+    //RUN_TEST(test_compas_nam_parse);
     return UNITY_END();
 }

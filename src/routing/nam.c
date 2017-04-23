@@ -6,21 +6,54 @@
  * directory for more details.
  */
 
-#include "compas/routing/dodag.h"
+#include <string.h>
+
+#include "compas/compas.h"
 #include "compas/routing/nam.h"
 
-void compas_nam_create(const char *name, uint16_t name_len, compas_nam_t *nam)
+void compas_nam_create(compas_nam_t *nam)
 {
     nam->type = COMPAS_MSG_TYPE_NAM;
-    nam->name_len = (name_len < COMPAS_NAME_LEN) ? name_len : COMPAS_NAME_LEN;
-    memcpy(nam + 1, name, nam->name_len);
+    nam->len = 0;
+}
+
+void compas_nam_tlv_add_name(compas_nam_t *nam, const char *name,
+                             uint16_t name_len)
+{
+    name_len = (name_len > COMPAS_NAME_LEN) ? COMPAS_NAME_LEN : name_len;
+    compas_tlv_t *tlv = compas_tlv_add((uint8_t *) (nam + 1), nam->len,
+                                  COMPAS_TLV_NAME, name_len);
+    memcpy((uint8_t *)(tlv + 1), name, name_len);
+    nam->len += tlv->length;
+}
+
+void compas_nam_tlv_add_lifetime(compas_nam_t *nam, uint16_t lifetime)
+{
+    compas_tlv_t *tlv= compas_tlv_add((uint8_t *) (nam + 1), nam->len,
+                                  COMPAS_TLV_LIFETIME, sizeof(lifetime));
+    memcpy((uint8_t *)(tlv + 1), &lifetime, sizeof(lifetime));
+    nam->len += tlv->length;
+}
+
+bool compas_nam_tlv_iter(compas_nam_t *nam, uint16_t *offset,
+                         compas_tlv_t **tlv)
+{
+    if (nam->len - *offset == 0) {
+        return false;
+    }
+
+    *tlv = compas_tlv_read((uint8_t *) (nam + 1), *offset);
+    *offset += (*tlv)->length;
+
+    return true;
 }
 
 void compas_nam_parse(char *name, uint16_t *name_len, const compas_nam_t *nam)
 {
+    /*
     uint16_t len = (nam->name_len < COMPAS_NAME_LEN) ?
                     nam->name_len : COMPAS_NAME_LEN;
     *name_len = len;
     memcpy(name, nam + 1, len);
-
+    */
 }

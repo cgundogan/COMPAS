@@ -18,6 +18,8 @@
 
 #include <stdint.h>
 
+#include "compas/compas.h"
+
 /**
  * @brief Specify on compile time whether this node should be initialized as
  * DODAG root
@@ -37,37 +39,7 @@
 #define COMPAS_DODAG_ROOT_RANK      (1)
 
 /**
- * @brief Max. length of a prefix
- */
-#ifndef COMPAS_PREFIX_LEN
-#define COMPAS_PREFIX_LEN           (32)
-#endif
-
-/**
- * @brief Max. length of a face address
- */
-#ifndef COMPAS_FACE_ADDR_LEN
-#define COMPAS_FACE_ADDR_LEN        (8)
-#endif
-
-/**
- * @name Message types
- * Each message is differentiated by a message type
- * @{
- */
-/**
- * @brief Message type for PAM
- */
-#define COMPAS_MSG_TYPE_PAM         (0xC0)
-
-/**
- * @brief Message type for NAM
- */
-#define COMPAS_MSG_TYPE_NAM         (0xC1)
-/** @} */
-
-/**
- * @brief Immediate parent in the DODAG
+ * @brief Definition for DODAG parents
  */
 typedef struct {
     /** Face address of this parent (e.g. L2 address) */
@@ -85,13 +57,6 @@ typedef struct {
     uint16_t prefix_len;        /**< Length of compas_dodag_t::prefix */
     compas_parent_t parent;     /**< Immediate parent in the DODAG */
 } compas_dodag_t;
-
-/**
- * @brief COMPAS messsage definition
- */
-typedef struct __attribute__((packed)) {
-    uint8_t type;               /**< Message type of a compas messsage */
-} compas_message_t;
 
 /**
  * @brief Initialize DODAG root
