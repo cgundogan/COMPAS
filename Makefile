@@ -57,7 +57,6 @@ $(LIBNAME): $(objects)
 all: $(LIBNAME)
 
 # build all unit-tests and link $(LIBTOOL).a
-.PHONY: unit-test
 unit-test: LDLIBS += $(LIBNAME)
 unit-test: $(LIBNAME) $(unittests_bin)
 
