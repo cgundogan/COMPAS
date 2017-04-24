@@ -88,7 +88,7 @@ static inline compas_tlv_t *compas_tlv_add(uint8_t *buf, uint16_t offset,
 {
     compas_tlv_t *tlv = (compas_tlv_t *) (buf + offset);
     tlv->type = type;
-    tlv->length = sizeof(compas_tlv_t) + len;
+    tlv->length = len;
     return tlv;
 }
 

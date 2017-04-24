@@ -128,17 +128,6 @@ void test_compas_nam_tlv_iter(void)
     TEST_ASSERT_FALSE(compas_nam_tlv_iter(nam, &offset, &tlv));
 }
 
-void test_compas_nam_parse(void)
-{
-    compas_nam_t *nam = (compas_nam_t *) buf_nam;
-    uint16_t name_len;
-    char test_name[TEST_PREFIX_LEN];
-    compas_nam_create(nam);
-    compas_nam_parse(test_name, &name_len, nam);
-    TEST_ASSERT_EQUAL_UINT16(name_len, TEST_PREFIX_LEN);
-    TEST_ASSERT_EQUAL_STRING_LEN(test_name, test_prefix, TEST_PREFIX_LEN);
-}
-
 int main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_compas_dodag_init_root);
@@ -149,6 +138,5 @@ int main(void) {
     RUN_TEST(test_compas_nam_tlv_add_name);
     RUN_TEST(test_compas_nam_tlv_add_lifetime);
     RUN_TEST(test_compas_nam_tlv_iter);
-    //RUN_TEST(test_compas_nam_parse);
     return UNITY_END();
 }

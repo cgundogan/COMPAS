@@ -82,13 +82,4 @@ void compas_nam_tlv_add_lifetime(compas_nam_t *nam, uint16_t lifetime);
 bool compas_nam_tlv_iter(compas_nam_t *nam, uint16_t *offset,
                          compas_tlv_t **tlv);
 
-/**
- * @brief Parse NAM @p nam
- *
- * @param[out]  name                Name in the NAM
- * @param[out]  name_len            Length of the name
- * @param[in]   nam                 Pointer to NAM to parse from
- */
-void compas_nam_parse(char *name, uint16_t *name_len, const compas_nam_t *nam);
-
 #endif /* COMPAS_ROUTING_NAM_H */

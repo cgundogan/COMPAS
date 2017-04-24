@@ -24,7 +24,7 @@ void compas_nam_tlv_add_name(compas_nam_t *nam, const char *name,
     compas_tlv_t *tlv = compas_tlv_add((uint8_t *) (nam + 1), nam->len,
                                   COMPAS_TLV_NAME, name_len);
     memcpy((uint8_t *)(tlv + 1), name, name_len);
-    nam->len += tlv->length;
+    nam->len += tlv->length + sizeof(compas_tlv_t);
 }
 
 void compas_nam_tlv_add_lifetime(compas_nam_t *nam, uint16_t lifetime)
@@ -32,7 +32,7 @@ void compas_nam_tlv_add_lifetime(compas_nam_t *nam, uint16_t lifetime)
     compas_tlv_t *tlv= compas_tlv_add((uint8_t *) (nam + 1), nam->len,
                                   COMPAS_TLV_LIFETIME, sizeof(lifetime));
     memcpy((uint8_t *)(tlv + 1), &lifetime, sizeof(lifetime));
-    nam->len += tlv->length;
+    nam->len += tlv->length + sizeof(compas_tlv_t);
 }
 
 bool compas_nam_tlv_iter(compas_nam_t *nam, uint16_t *offset,
@@ -43,17 +43,7 @@ bool compas_nam_tlv_iter(compas_nam_t *nam, uint16_t *offset,
     }
 
     *tlv = compas_tlv_read((uint8_t *) (nam + 1), *offset);
-    *offset += (*tlv)->length;
+    *offset += (*tlv)->length + sizeof(compas_tlv_t);
 
     return true;
-}
-
-void compas_nam_parse(char *name, uint16_t *name_len, const compas_nam_t *nam)
-{
-    /*
-    uint16_t len = (nam->name_len < COMPAS_NAME_LEN) ?
-                    nam->name_len : COMPAS_NAME_LEN;
-    *name_len = len;
-    memcpy(name, nam + 1, len);
-    */
 }
