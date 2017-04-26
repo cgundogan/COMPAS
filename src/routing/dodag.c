@@ -14,11 +14,20 @@
 void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
                             uint16_t prefix_len)
 {
+    dodag->freshness = 0;
+    dodag->flags = 0;
     dodag->rank = COMPAS_DODAG_ROOT_RANK;
     memcpy(dodag->prefix, prefix,
            (prefix_len < COMPAS_PREFIX_LEN) ? prefix_len : COMPAS_PREFIX_LEN);
     dodag->prefix_len = prefix_len;
     memset(&dodag->parent, 0, sizeof(compas_parent_t));
+}
+
+bool compas_dodag_parent_eq(compas_dodag_t *dodag, const uint8_t *face_addr,
+                            uint8_t face_addr_len) {
+    uint8_t len = (face_addr_len <= dodag->parent.face_addr_len) ?
+                   face_addr_len : dodag->parent.face_addr_len;
+    return memcmp(dodag->parent.face_addr, face_addr, len) == 0;
 }
 
 void compas_dodag_print(compas_dodag_t *dodag)

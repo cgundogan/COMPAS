@@ -11,7 +11,7 @@ UNITTESTS_PATH  :=  $(LIBROOT)/tests/unit-tests
 UNITY_PATH      := $(UNITTESTS_PATH)/unity
 
 # specify the modules to build
-modules         :=  src/routing
+modules         :=  src src/routing
 
 # sources will be filled by included Makefiles
 sources         := $(wildcard $(modules:%=%/*.c))

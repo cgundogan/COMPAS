@@ -18,6 +18,7 @@
 
 #include <stdint.h>
 
+#include "compas/seq.h"
 #include "compas/routing/dodag.h"
 
 /**
@@ -27,6 +28,8 @@
  */
 typedef struct __attribute__((packed)) {
     uint8_t type;               /**< Message type of a PAM */
+    compas_dodag_flags_t flags; /**< DODAG flags @ref compas_dodag_flags_t */
+    compas_seq8_t freshness;    /**< Uplink freshness */
     uint16_t rank;              /**< Rank of the sender */
     uint16_t prefix_len;        /**< Length of the prefix */
 } compas_pam_t;

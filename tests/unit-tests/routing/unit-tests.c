@@ -72,12 +72,40 @@ void test_compas_pam_parse(void)
     TEST_ASSERT_EQUAL_UINT16(dodag1.rank + 1, dodag2.rank);
     TEST_ASSERT_EQUAL_UINT8(face_addr_len, dodag2.parent.face_addr_len);
     TEST_ASSERT_EQUAL_UINT8_ARRAY(face_addr, dodag2.parent.face_addr, face_addr_len);
-    TEST_ASSERT_EQUAL_INT(-2, compas_pam_parse(&dodag2, pam,
+    TEST_ASSERT_EQUAL_INT(0, compas_pam_parse(&dodag2, pam,
+                                              face_addr, face_addr_len));
+    dodag2.parent.face_addr[0] ^= 0xAA;
+    pam->flags |= COMPAS_DODAG_FLAGS_FLOATING;
+    TEST_ASSERT_EQUAL_INT(-4, compas_pam_parse(&dodag2, pam,
                                                face_addr, face_addr_len));
-    memset(&dodag2, 0, sizeof(dodag2));
+
+    pam->flags &= ~COMPAS_DODAG_FLAGS_FLOATING;
+    pam->rank++;
+    TEST_ASSERT_EQUAL_INT(-3, compas_pam_parse(&dodag2, pam,
+                                               face_addr, face_addr_len));
+
+    pam->freshness = compas_seq8_add(dodag2.freshness, 3);
+
+    TEST_ASSERT_EQUAL_INT(0, compas_pam_parse(&dodag2, pam,
+                                              face_addr, face_addr_len));
     pam->rank = UINT16_MAX;
     TEST_ASSERT_EQUAL_INT(-1, compas_pam_parse(&dodag2, pam,
                                                face_addr, face_addr_len));
+}
+
+void test_compas_dodag_parent_eq(void)
+{
+    compas_dodag_t dodag1;
+    compas_dodag_t dodag2;
+    compas_dodag_init_root(&dodag1, test_prefix, TEST_PREFIX_LEN);
+    compas_pam_t *pam = (compas_pam_t *) buf_pam;
+    compas_pam_create(&dodag1, pam);
+    uint8_t face_addr_len = sizeof(face_addr)/sizeof(face_addr[0]);
+    TEST_ASSERT_EQUAL_INT(0, compas_pam_parse(&dodag2, pam,
+                                              face_addr, face_addr_len));
+    TEST_ASSERT_TRUE(compas_dodag_parent_eq(&dodag2, face_addr, face_addr_len));
+    dodag2.parent.face_addr[0] ^= 0xAA;
+    TEST_ASSERT_FALSE(compas_dodag_parent_eq(&dodag2, face_addr, face_addr_len));
 }
 
 void test_compas_nam_create(void)
@@ -134,6 +162,7 @@ int main(void) {
     RUN_TEST(test_compas_pam_create);
     RUN_TEST(test_compas_pam_len);
     RUN_TEST(test_compas_pam_parse);
+    RUN_TEST(test_compas_dodag_parent_eq);
     RUN_TEST(test_compas_nam_create);
     RUN_TEST(test_compas_nam_tlv_add_name);
     RUN_TEST(test_compas_nam_tlv_add_lifetime);
