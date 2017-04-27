@@ -23,8 +23,8 @@ void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
     memset(&dodag->parent, 0, sizeof(compas_parent_t));
 }
 
-bool compas_dodag_parent_eq(compas_dodag_t *dodag, const uint8_t *face_addr,
-                            uint8_t face_addr_len) {
+bool compas_dodag_parent_eq(const compas_dodag_t *dodag,
+                            const uint8_t *face_addr, uint8_t face_addr_len) {
     uint8_t len = (face_addr_len <= dodag->parent.face_addr_len) ?
                    face_addr_len : dodag->parent.face_addr_len;
     return memcmp(dodag->parent.face_addr, face_addr, len) == 0;

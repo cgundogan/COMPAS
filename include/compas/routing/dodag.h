@@ -117,8 +117,8 @@ void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
  * @return      true, if equal
  * @return      false, otherwise
  */
-bool compas_dodag_parent_eq(compas_dodag_t *dodag, const uint8_t *face_addr,
-                            uint8_t face_addr_len);
+bool compas_dodag_parent_eq(const compas_dodag_t *dodag,
+                            const uint8_t *face_addr, uint8_t face_addr_len);
 
 /**
  * @brief Print DODAG to stdout

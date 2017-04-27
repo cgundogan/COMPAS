@@ -61,8 +61,9 @@ size_t compas_pam_len(const compas_dodag_t *dodag);
  * @param[in]   face_addr       Face address (e.g. L2 address)
  * @param[in]   face_addr_len   Length of face address @p face_addr
  *
- * @return      0, on success
- * @return      otherwise, on failure
+ * @return      0, on parsing PAM from currently selected parent
+ * @return      1, on parsing PAM from new parent
+ * @return      < 0, on failure
  */
 int compas_pam_parse(compas_dodag_t *dodag, const compas_pam_t *pam,
                      const uint8_t *face_addr, uint8_t face_addr_len);
