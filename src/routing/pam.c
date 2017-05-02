@@ -28,9 +28,8 @@ size_t compas_pam_len(const compas_dodag_t *dodag)
     return len;
 }
 
-static int _compas_pam_check(const compas_dodag_t *dodag,
-                             const compas_pam_t *pam, const uint8_t *face_addr,
-                             uint8_t face_addr_len)
+int compas_pam_check(const compas_dodag_t *dodag, const compas_pam_t *pam,
+                     const uint8_t *face_addr, uint8_t face_addr_len)
 {
     if (dodag->rank == COMPAS_DODAG_ROOT_RANK) {
         CDBG_PRINT("compas_pam_parse: ignore PAM for root\n");
@@ -86,7 +85,7 @@ static int _compas_pam_check(const compas_dodag_t *dodag,
 int compas_pam_parse(compas_dodag_t *dodag, const compas_pam_t *pam,
                      const uint8_t *face_addr, uint8_t face_addr_len)
 {
-    int res = _compas_pam_check(dodag, pam, face_addr, face_addr_len);
+    int res = compas_pam_check(dodag, pam, face_addr, face_addr_len);
 
     if (res >= 0) {
         dodag->flags = pam->flags;

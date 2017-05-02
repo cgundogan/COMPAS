@@ -35,6 +35,21 @@ typedef struct __attribute__((packed)) {
 } compas_pam_t;
 
 /**
+ * @brief Check validity of PAM @p pam
+ *
+ * @param[out]  dodag           Pointer to the DODAG
+ * @param[in]   pam             Pointer to PAM to parse from
+ * @param[in]   face_addr       Face address (e.g. L2 address)
+ * @param[in]   face_addr_len   Length of face address @p face_addr
+ *
+ * @return      0, on parsing PAM from currently selected parent
+ * @return      1, on parsing PAM from new parent
+ * @return      < 0, on failure
+ */
+int compas_pam_check(const compas_dodag_t *dodag, const compas_pam_t *pam,
+                     const uint8_t *face_addr, uint8_t face_addr_len);
+
+/**
  * @brief Create a PAM in @p pam
  *
  * @param[in]   dodag           Pointer to the DODAG
