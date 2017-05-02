@@ -53,7 +53,7 @@ typedef uint8_t compas_dodag_flags_t;
 /**
  * @brief En-/Disable floating DODAG
  */
-#define COMPAS_DODAG_FLAGS_FLOATING (1 << 1)
+#define COMPAS_DODAG_FLAGS_FLOATING (1 << 0)
 /** @} */
 
 /**
