@@ -33,19 +33,19 @@ int compas_pam_check(const compas_dodag_t *dodag, const compas_pam_t *pam,
 {
     if (dodag->rank == COMPAS_DODAG_ROOT_RANK) {
         CDBG_PRINT("compas_pam_parse: ignore PAM for root\n");
-        return -1;
+        return COMPAS_PAM_RET_CODE_ROOTRANK;
     }
 
     if (pam->rank == UINT16_MAX) {
         CDBG_PRINT("compas_pam_parse: ignore PAM with max rank\n");
-        return -2;
+        return COMPAS_PAM_RET_CODE_MAXRANK;
     }
 
     bool is_my_parent = false;
 
     /* join DODAG if not joined yet */
     if (dodag->rank == COMPAS_DODAG_UNDEF) {
-        return 1;
+        return COMPAS_PAM_RET_CODE_NEWPARENT;
     }
 
     is_my_parent = compas_dodag_parent_eq(dodag, face_addr, face_addr_len);
@@ -57,29 +57,40 @@ int compas_pam_check(const compas_dodag_t *dodag, const compas_pam_t *pam,
             compas_dodag_floating(pam->flags)) {
             if (compas_seq8_cmp(dodag->freshness, pam->freshness) > 0) {
                 CDBG_PRINT("compas_pam_parse: ignore outdated DODAG\n");
-                return -3;
+                return COMPAS_PAM_RET_CODE_OLDDODAG;
             }
             /* check if freshness is in range */
             if (compas_seq8_cmp(compas_seq8_add(dodag->freshness, 3),
                                 pam->freshness) > 0) {
                 if (dodag->rank <= (pam->rank + 1)) {
                     CDBG_PRINT("compas_pam_parse: ignore worse ranks\n");
-                    return -4;
+                    return COMPAS_PAM_RET_CODE_WORSERANK;
                 }
             }
         }
         /* I am not floating, neighbor is */
         else if (!compas_dodag_floating(dodag->flags)) {
             CDBG_PRINT("compas_pam_parse: ignore floating DODAG\n");
-            return -5;
+            return COMPAS_PAM_RET_CODE_FLOATINGDODAG;
         }
 
-        /* 1 for new parent */
-        return 1;
+        /* I am floating, neighbor isn't */
+
+        /* TODO
+        else {
+            if (dodag->rank <= (pam->rank + 1)) {
+                CDBG_PRINT("compas_pam_parse: ignore worse ranks\n");
+                return COMPAS_PAM_RET_CODE_WORSERANK;
+            }
+        }
+        */
+
+        /* new parent */
+        return COMPAS_PAM_RET_CODE_NEWPARENT;
     }
 
-    /* 0 for current parent */
-    return 0;
+    /* current parent */
+    return COMPAS_PAM_RET_CODE_CURRPARENT;
 }
 
 int compas_pam_parse(compas_dodag_t *dodag, const compas_pam_t *pam,
@@ -87,7 +98,8 @@ int compas_pam_parse(compas_dodag_t *dodag, const compas_pam_t *pam,
 {
     int res = compas_pam_check(dodag, pam, face_addr, face_addr_len);
 
-    if (res >= 0) {
+    if ((res == COMPAS_PAM_RET_CODE_CURRPARENT) ||
+        (res == COMPAS_PAM_RET_CODE_NEWPARENT)) {
         dodag->flags = pam->flags;
         dodag->freshness = pam->freshness;
         dodag->rank = pam->rank + 1;

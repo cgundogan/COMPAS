@@ -35,6 +35,41 @@ typedef struct __attribute__((packed)) {
 } compas_pam_t;
 
 /**
+ * @defgroup compas_pam_ret_codes PAM parsing return codes
+ * Return codes for compas_pam_check()
+ * @{
+ */
+/**
+ * @brief Code for current parent after PAM parsing
+ */
+#define COMPAS_PAM_RET_CODE_CURRPARENT      (0)
+/**
+ * @brief Code for new parent after PAM parsing
+ */
+#define COMPAS_PAM_RET_CODE_NEWPARENT       (1)
+/**
+ * @brief Code for ROOT rank
+ */
+#define COMPAS_PAM_RET_CODE_ROOTRANK        (2)
+/**
+ * @brief Code for MAX rank
+ */
+#define COMPAS_PAM_RET_CODE_MAXRANK         (3)
+/**
+ * @brief Code for outdated DODAG
+ */
+#define COMPAS_PAM_RET_CODE_OLDDODAG        (4)
+/**
+ * @brief Code for PAM with worse rank
+ */
+#define COMPAS_PAM_RET_CODE_WORSERANK       (5)
+/**
+ * @brief Code for PAM with floating DODAG
+ */
+#define COMPAS_PAM_RET_CODE_FLOATINGDODAG   (6)
+/** @} */
+
+/**
  * @brief Check validity of PAM @p pam
  *
  * @param[out]  dodag           Pointer to the DODAG
@@ -42,9 +77,7 @@ typedef struct __attribute__((packed)) {
  * @param[in]   face_addr       Face address (e.g. L2 address)
  * @param[in]   face_addr_len   Length of face address @p face_addr
  *
- * @return      0, on parsing PAM from currently selected parent
- * @return      1, on parsing PAM from new parent
- * @return      < 0, on failure
+ * @return      @ref compas_pam_ret_codes
  */
 int compas_pam_check(const compas_dodag_t *dodag, const compas_pam_t *pam,
                      const uint8_t *face_addr, uint8_t face_addr_len);
