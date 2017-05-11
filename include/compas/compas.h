@@ -26,6 +26,18 @@
 #endif
 
 /**
+ * @brief Max. length of a name suffix
+ */
+#ifndef COMPAS_NAME_SUFFIX_LEN
+#define COMPAS_NAME_SUFFIX_LEN      (32)
+#endif
+
+/**
+ * @brief Max. length of a name
+ */
+#define COMPAS_NAME_LEN             (COMPAS_PREFIX_LEN + COMPAS_NAME_SUFFIX_LEN)
+
+/**
  * @brief Max. length of a face address
  */
 #ifndef COMPAS_FACE_ADDR_LEN
@@ -64,6 +76,79 @@
 #define COMPAS_TLV_LIFETIME         (0x01)
 
 /** @} */
+
+/**
+ * @brief Face (L2 address)
+ */
+typedef struct {
+    /** Face address of this parent (e.g. L2 address) */
+    uint8_t face_addr[COMPAS_FACE_ADDR_LEN];
+    uint8_t face_addr_len;      /**< Length of compas_parent_t::face_addr */
+} compas_face_t;
+
+/**
+ * @brief Initialize a compas_face_t
+ *
+ * @param[in]       face            Face to initializ
+ * @param[in]       face_addr       Face address
+ * @param[in]       face_addr_len   Length of face address
+ */
+static inline void compas_face_init(compas_face_t *face,
+                                    const uint8_t *face_addr,
+                                    uint8_t face_addr_len)
+{
+    face->face_addr_len = face_addr_len;
+    memcpy(face->face_addr, face_addr,
+           (face_addr_len > COMPAS_FACE_ADDR_LEN) ?
+           COMPAS_FACE_ADDR_LEN : face_addr_len);
+}
+
+/**
+ * @brief Prefix representation
+ */
+typedef struct {
+    /**< Prefix */
+    char prefix[COMPAS_PREFIX_LEN];
+    uint16_t prefix_len;            /**< Length of a prefix */
+} compas_prefix_t;
+
+/**
+ * @brief Initialize a compas_prefix_t
+ *
+ * @param[in]       prefix          Prefix to initializ
+ * @param[in]       p               Prefix
+ * @param[in]       p_len           Length of prefix
+ */
+static inline void compas_prefix_init(compas_prefix_t *prefix,
+                                      const char *p, uint16_t p_len)
+{
+    prefix->prefix_len = p_len;
+    memcpy(prefix->prefix, p,
+           (p_len > COMPAS_PREFIX_LEN) ? COMPAS_PREFIX_LEN : p_len);
+}
+
+/**
+ * @brief Name representation
+ */
+typedef struct {
+    char name[COMPAS_NAME_LEN]; /**< Name */
+    uint16_t name_len;          /**< Length of a name */
+} compas_name_t;
+
+/**
+ * @brief Initialize a compas_name_t
+ *
+ * @param[in]       name            Name to initializ
+ * @param[in]       n               Name
+ * @param[in]       n_len           Length of name
+ */
+static inline void compas_name_init(compas_name_t *name,
+                                    const char *n, uint16_t n_len)
+{
+    name->name_len = n_len;
+    memcpy(name->name, n,
+           (n_len > COMPAS_NAME_LEN) ? COMPAS_NAME_LEN : n_len);
+}
 
 /**
  * @brief Type-Length-Value (TLV) option definition

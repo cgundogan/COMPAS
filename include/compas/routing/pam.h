@@ -74,13 +74,12 @@ typedef struct __attribute__((packed)) {
  *
  * @param[out]  dodag           Pointer to the DODAG
  * @param[in]   pam             Pointer to PAM to parse from
- * @param[in]   face_addr       Face address (e.g. L2 address)
- * @param[in]   face_addr_len   Length of face address @p face_addr
+ * @param[in]   face            Pointer to the face
  *
  * @return      @ref compas_pam_ret_codes
  */
 int compas_pam_check(const compas_dodag_t *dodag, const compas_pam_t *pam,
-                     const uint8_t *face_addr, uint8_t face_addr_len);
+                     const compas_face_t *face);
 
 /**
  * @brief Create a PAM in @p pam

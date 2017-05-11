@@ -29,7 +29,7 @@ void compas_nam_tlv_add_name(compas_nam_t *nam, const char *name,
 
 void compas_nam_tlv_add_lifetime(compas_nam_t *nam, uint16_t lifetime)
 {
-    compas_tlv_t *tlv= compas_tlv_add((uint8_t *) (nam + 1), nam->len,
+    compas_tlv_t *tlv = compas_tlv_add((uint8_t *) (nam + 1), nam->len,
                                   COMPAS_TLV_LIFETIME, sizeof(lifetime));
     memcpy((uint8_t *)(tlv + 1), &lifetime, sizeof(lifetime));
     nam->len += tlv->length + sizeof(compas_tlv_t);

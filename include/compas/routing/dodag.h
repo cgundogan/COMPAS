@@ -80,9 +80,7 @@ static inline bool compas_dodag_floating(compas_dodag_flags_t flags)
  * @brief Definition for DODAG parents
  */
 typedef struct {
-    /** Face address of this parent (e.g. L2 address) */
-    uint8_t face_addr[COMPAS_FACE_ADDR_LEN];
-    uint8_t face_addr_len;      /**< Length of compas_parent_t::face_addr */
+    compas_face_t face;         /**< face to this parent */
 } compas_parent_t;
 
 /**
@@ -92,8 +90,7 @@ typedef struct {
     compas_seq8_t freshness;    /**< Uplink freshness */
     uint8_t flags;              /**< DODAG flags */
     uint16_t rank;              /**< Rank of the node */
-    char prefix[COMPAS_PREFIX_LEN]; /**< Default Prefix of this DODAG */
-    uint16_t prefix_len;        /**< Length of compas_dodag_t::prefix */
+    compas_prefix_t prefix;     /**< Default Prefix of this DODAG */
     compas_parent_t parent;     /**< Immediate parent in the DODAG */
 } compas_dodag_t;
 
@@ -111,14 +108,13 @@ void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
  * @brief Compare @p face_addr with the current parent's address in @p dodag
  *
  * @param[in]   dodag           Pointer to the DODAG
- * @param[in]   face_addr       Address to check against
- * @param[in]   face_addr_len   Length of the address
+ * @param[in]   face            Face to check against
  *
  * @return      true, if equal
  * @return      false, otherwise
  */
 bool compas_dodag_parent_eq(const compas_dodag_t *dodag,
-                            const uint8_t *face_addr, uint8_t face_addr_len);
+                            const compas_face_t *face);
 
 /**
  * @brief Print DODAG to stdout
