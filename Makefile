@@ -13,7 +13,7 @@ UNITY_PATH      := $(UNITTESTS_PATH)/unity
 # specify the modules to build
 modules         :=  src src/routing
 
-# sources will be filled by included Makefiles
+# compute sources from modules
 sources         := $(wildcard $(modules:%=%/*.c))
 
 # transformations for object and dependency files
