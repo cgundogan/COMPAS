@@ -32,8 +32,8 @@ void test_compas_dodag_init_root(void)
     compas_dodag_t dodag;
     compas_dodag_init_root(&dodag, test_prefix, TEST_PREFIX_LEN);
     TEST_ASSERT_EQUAL_UINT16(dodag.rank, COMPAS_DODAG_ROOT_RANK);
-    TEST_ASSERT_EQUAL_UINT16(dodag.prefix_len, TEST_PREFIX_LEN);
-    TEST_ASSERT_EQUAL_STRING_LEN(dodag.prefix, test_prefix, TEST_PREFIX_LEN);
+    TEST_ASSERT_EQUAL_UINT16(dodag.prefix.prefix_len, TEST_PREFIX_LEN);
+    TEST_ASSERT_EQUAL_STRING_LEN(dodag.prefix.prefix, test_prefix, TEST_PREFIX_LEN);
 }
 
 void test_compas_pam_create(void)
@@ -67,14 +67,14 @@ void test_compas_pam_parse(void)
     uint8_t face_addr_len = sizeof(face_addr)/sizeof(face_addr[0]);
     TEST_ASSERT_EQUAL_INT(1, compas_pam_parse(&dodag2, pam,
                                               face_addr, face_addr_len));
-    TEST_ASSERT_EQUAL_UINT16(dodag1.prefix_len, dodag2.prefix_len);
-    TEST_ASSERT_EQUAL_STRING_LEN(dodag1.prefix, dodag2.prefix, dodag1.prefix_len);
+    TEST_ASSERT_EQUAL_UINT16(dodag1.prefix.prefix_len, dodag2.prefix.prefix_len);
+    TEST_ASSERT_EQUAL_STRING_LEN(dodag1.prefix.prefix, dodag2.prefix.prefix, dodag1.prefix.prefix_len);
     TEST_ASSERT_EQUAL_UINT16(dodag1.rank + 1, dodag2.rank);
-    TEST_ASSERT_EQUAL_UINT8(face_addr_len, dodag2.parent.face_addr_len);
-    TEST_ASSERT_EQUAL_UINT8_ARRAY(face_addr, dodag2.parent.face_addr, face_addr_len);
+    TEST_ASSERT_EQUAL_UINT8(face_addr_len, dodag2.parent.face.face_addr_len);
+    TEST_ASSERT_EQUAL_UINT8_ARRAY(face_addr, dodag2.parent.face.face_addr, face_addr_len);
     TEST_ASSERT_EQUAL_INT(0, compas_pam_parse(&dodag2, pam,
                                               face_addr, face_addr_len));
-    dodag2.parent.face_addr[0] ^= 0xAA;
+    dodag2.parent.face.face_addr[0] ^= 0xAA;
     pam->flags |= COMPAS_DODAG_FLAGS_FLOATING;
     TEST_ASSERT_EQUAL_INT(COMPAS_PAM_RET_CODE_FLOATINGDODAG, compas_pam_parse(&dodag2, pam,
                                                                               face_addr, face_addr_len));
@@ -106,9 +106,11 @@ void test_compas_dodag_parent_eq(void)
     uint8_t face_addr_len = sizeof(face_addr)/sizeof(face_addr[0]);
     TEST_ASSERT_EQUAL_INT(1, compas_pam_parse(&dodag2, pam,
                                               face_addr, face_addr_len));
-    TEST_ASSERT_TRUE(compas_dodag_parent_eq(&dodag2, face_addr, face_addr_len));
-    dodag2.parent.face_addr[0] ^= 0xAA;
-    TEST_ASSERT_FALSE(compas_dodag_parent_eq(&dodag2, face_addr, face_addr_len));
+    compas_face_t face;
+    compas_face_init(&face, face_addr, face_addr_len);
+    TEST_ASSERT_TRUE(compas_dodag_parent_eq(&dodag2, &face));
+    dodag2.parent.face.face_addr[0] ^= 0xAA;
+    TEST_ASSERT_FALSE(compas_dodag_parent_eq(&dodag2, &face));
 }
 
 void test_compas_nam_create(void)
