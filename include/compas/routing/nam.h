@@ -22,18 +22,6 @@
 #include "compas/compas.h"
 
 /**
- * @brief Max. length of a name suffix
- */
-#ifndef COMPAS_NAME_SUFFIX_LEN
-#define COMPAS_NAME_SUFFIX_LEN  (32)
-#endif
-
-/**
- * @brief Max. length of a name
- */
-#define COMPAS_NAME_LEN         (COMPAS_PREFIX_LEN + COMPAS_NAME_SUFFIX_LEN)
-
-/**
  * @brief NAM packet definition
  * @note @ref compas_tlv_t options may follow this struct immediately.
  */

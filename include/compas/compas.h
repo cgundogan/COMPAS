@@ -17,7 +17,13 @@
 #define COMPAS_H
 
 #include <stdint.h>
+#include <string.h>
 
+/**
+ * @addtogroup configurables
+ * These options are cofigurable via CFLAGS on compile time
+ * @{
+ */
 /**
  * @brief Max. length of a prefix
  */
@@ -33,16 +39,17 @@
 #endif
 
 /**
- * @brief Max. length of a name
- */
-#define COMPAS_NAME_LEN             (COMPAS_PREFIX_LEN + COMPAS_NAME_SUFFIX_LEN)
-
-/**
  * @brief Max. length of a face address
  */
 #ifndef COMPAS_FACE_ADDR_LEN
 #define COMPAS_FACE_ADDR_LEN        (8)
 #endif
+/** @} */
+
+/**
+ * @brief Max. length of a name
+ */
+#define COMPAS_NAME_LEN             (COMPAS_PREFIX_LEN + COMPAS_NAME_SUFFIX_LEN)
 
 /**
  * @name Message types
@@ -89,7 +96,7 @@ typedef struct {
 /**
  * @brief Initialize a compas_face_t
  *
- * @param[in]       face            Face to initializ
+ * @param[out]      face            Face to initializ
  * @param[in]       face_addr       Face address
  * @param[in]       face_addr_len   Length of face address
  */
@@ -115,7 +122,7 @@ typedef struct {
 /**
  * @brief Initialize a compas_prefix_t
  *
- * @param[in]       prefix          Prefix to initializ
+ * @param[out]      prefix          Prefix to initializ
  * @param[in]       p               Prefix
  * @param[in]       p_len           Length of prefix
  */
@@ -138,7 +145,7 @@ typedef struct {
 /**
  * @brief Initialize a compas_name_t
  *
- * @param[in]       name            Name to initializ
+ * @param[out]      name            Name to initializ
  * @param[in]       n               Name
  * @param[in]       n_len           Length of name
  */
@@ -161,7 +168,7 @@ typedef struct __attribute__((packed)) {
 /**
  * @brief Add a new TLV option to the buffer
  *
- * @param[in]       buf             Buffer to write into
+ * @param[out]      buf             Buffer to write into
  * @param[in]       offset          Offset within the buffer to write into
  * @param[in]       type            TLV option type to write into the buffer
  * @param[in]       len             TLV option len to write into the buffer
