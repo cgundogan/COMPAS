@@ -76,24 +76,24 @@ void test_compas_pam_parse(void)
                                               face_addr, face_addr_len));
     dodag2.parent.face_addr[0] ^= 0xAA;
     pam->flags |= COMPAS_DODAG_FLAGS_FLOATING;
-    TEST_ASSERT_EQUAL_INT(-5, compas_pam_parse(&dodag2, pam,
-                                               face_addr, face_addr_len));
+    TEST_ASSERT_EQUAL_INT(COMPAS_PAM_RET_CODE_FLOATINGDODAG, compas_pam_parse(&dodag2, pam,
+                                                                              face_addr, face_addr_len));
 
     pam->flags &= ~COMPAS_DODAG_FLAGS_FLOATING;
     pam->rank++;
-    TEST_ASSERT_EQUAL_INT(-4, compas_pam_parse(&dodag2, pam,
-                                               face_addr, face_addr_len));
+    TEST_ASSERT_EQUAL_INT(COMPAS_PAM_RET_CODE_WORSERANK, compas_pam_parse(&dodag2, pam,
+                                                                          face_addr, face_addr_len));
 
     pam->freshness = compas_seq8_add(dodag2.freshness, 3);
 
-    TEST_ASSERT_EQUAL_INT(1, compas_pam_parse(&dodag2, pam,
-                                              face_addr, face_addr_len));
+    TEST_ASSERT_EQUAL_INT(COMPAS_PAM_RET_CODE_NEWPARENT, compas_pam_parse(&dodag2, pam,
+                                                                          face_addr, face_addr_len));
     pam->rank = UINT16_MAX;
-    TEST_ASSERT_EQUAL_INT(-2, compas_pam_parse(&dodag2, pam,
-                                               face_addr, face_addr_len));
+    TEST_ASSERT_EQUAL_INT(COMPAS_PAM_RET_CODE_MAXRANK, compas_pam_parse(&dodag2, pam,
+                                                                        face_addr, face_addr_len));
     compas_pam_create(&dodag2, pam);
-    TEST_ASSERT_EQUAL_INT(-1, compas_pam_parse(&dodag1, pam,
-                                              face_addr, face_addr_len));
+    TEST_ASSERT_EQUAL_INT(COMPAS_PAM_RET_CODE_ROOTRANK, compas_pam_parse(&dodag1, pam,
+                                                                         face_addr, face_addr_len));
 }
 
 void test_compas_dodag_parent_eq(void)
