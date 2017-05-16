@@ -43,10 +43,8 @@ void compas_nam_create(compas_nam_t *nam);
  *
  * @param[in,out]   nam             Pointer to the NAM
  * @param[in]       name            Name to put into the NAM
- * @param[in]       name_len        Length of the name
  */
-void compas_nam_tlv_add_name(compas_nam_t *nam, const char *name,
-                             uint16_t name_len);
+void compas_nam_tlv_add_name(compas_nam_t *nam, const compas_name_t *name);
 
 /**
  * @brief Add a TLV option with type @ref COMPAS_TLV_LIFETIME to @p nam
