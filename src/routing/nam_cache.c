@@ -30,6 +30,8 @@ bool compas_nam_cache_add(compas_dodag_t *dodag, const compas_name_t *name,
 
     if (new && !done) {
         new->in_use = true;
+        new->retries = COMPAS_DODAG_NAM_CACHE_RETRIES;
+        new->flags = 0;
         new->name = *name;
         if (face) {
             new->face = *face;

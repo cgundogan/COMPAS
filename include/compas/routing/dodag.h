@@ -84,6 +84,13 @@ static inline bool compas_dodag_floating(compas_dodag_flags_t flags)
 #ifndef COMPAS_DODAG_NAM_CACHE_LEN
 #define COMPAS_DODAG_NAM_CACHE_LEN (8U)
 #endif
+
+/**
+ * @brief Default number of retries for @ref compas_nam_cache_entry_t::retries
+ */
+#ifndef COMPAS_DODAG_NAM_CACHE_RETRIES
+#define COMPAS_DODAG_NAM_CACHE_RETRIES (3U)
+#endif
 /** @} */
 
 /**
@@ -123,6 +130,7 @@ typedef struct compas_nam_cache_entry {
     bool flags;                     /**< Flags for a nam cache entry */
     compas_name_t name;             /**< Name to request Data with */
     compas_face_t face;             /**< Incoming face of NAM */
+    uint8_t retries;                /**< No. of retries to adv. a name */
 } compas_nam_cache_entry_t;
 
 /**
