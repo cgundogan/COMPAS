@@ -81,15 +81,15 @@ static inline bool compas_dodag_floating(compas_dodag_flags_t flags)
 /**
  * @brief Length of the nam cache
  */
-#ifndef COMPAS_DODAG_NAM_CACHE_LEN
-#define COMPAS_DODAG_NAM_CACHE_LEN (8U)
+#ifndef COMPAS_NAM_CACHE_LEN
+#define COMPAS_NAM_CACHE_LEN (8U)
 #endif
 
 /**
  * @brief Default number of retries for @ref compas_nam_cache_entry_t::retries
  */
-#ifndef COMPAS_DODAG_NAM_CACHE_RETRIES
-#define COMPAS_DODAG_NAM_CACHE_RETRIES (3U)
+#ifndef COMPAS_NAM_CACHE_RETRIES
+#define COMPAS_NAM_CACHE_RETRIES (3U)
 #endif
 /** @} */
 
@@ -107,6 +107,10 @@ typedef uint8_t compas_nam_cache_flags_t;
  * @brief Set, if content originates from here
  */
 #define COMPAS_NAM_CACHE_FLAGS_ORIGINATES   (1 << 0)
+/**
+ * @brief Set, if name was requested
+ */
+#define COMPAS_NAM_CACHE_FLAGS_REQUESTED    (1 << 1)
 
 /**
  * @brief Check whether content originates from here
@@ -119,6 +123,19 @@ typedef uint8_t compas_nam_cache_flags_t;
 static inline bool compas_nam_cache_originates(compas_nam_cache_flags_t flags)
 {
     return flags & COMPAS_NAM_CACHE_FLAGS_ORIGINATES;
+}
+
+/**
+ * @brief Check whether name was requested before
+ *
+ * @param[in]   flags           @ref compas_nam_cache_flags_t
+ *
+ * @return      true, if @ref COMPAS_NAM_CACHE_FLAGS_REQUESTED is set
+ * @return      false, otherwise
+ */
+static inline bool compas_nam_cache_requested(compas_nam_cache_flags_t flags)
+{
+    return flags & COMPAS_NAM_CACHE_FLAGS_REQUESTED;
 }
 /** @} */
 
