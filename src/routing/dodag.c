@@ -29,7 +29,7 @@ bool compas_dodag_parent_eq(const compas_dodag_t *dodag,
     return memcmp(dodag->parent.face.face_addr, face->face_addr, len) == 0;
 }
 
-void compas_dodag_print(compas_dodag_t *dodag)
+void compas_dodag_print(const compas_dodag_t *dodag)
 {
     CDBG_PRINT("rank: %u - prefix: %.*s - prefix_len: %u - ",
                (unsigned) dodag->rank, dodag->prefix.prefix_len,

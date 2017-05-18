@@ -167,15 +167,15 @@ typedef struct {
     compas_prefix_t prefix;     /**< Default Prefix of this DODAG */
     compas_parent_t parent;     /**< Immediate parent in the DODAG */
                                 /**< NAM cache */
-    compas_nam_cache_entry_t nam_cache[COMPAS_DODAG_NAM_CACHE_LEN];
+    compas_nam_cache_entry_t nam_cache[COMPAS_NAM_CACHE_LEN];
 } compas_dodag_t;
 
 /**
  * @brief Initialize DODAG root
  *
- * @param[in]   dodag           Pointer to the DODAG
- * @param[in]   prefix          Default prefix of the DODAG
- * @param[in]   prefix_len      Length of the prefix
+ * @param[in,out]   dodag           Pointer to the DODAG
+ * @param[in]       prefix          Default prefix of the DODAG
+ * @param[in]       prefix_len      Length of the prefix
  */
 void compas_dodag_init_root(compas_dodag_t *dodag, const char *prefix,
                             uint16_t prefix_len);
@@ -198,7 +198,7 @@ bool compas_dodag_parent_eq(const compas_dodag_t *dodag,
  *
  * @param[in]   dodag           Pinter to the DODAG
  */
-void compas_dodag_print(compas_dodag_t *dodag);
+void compas_dodag_print(const compas_dodag_t *dodag);
 
 /**
  * @brief Add a new entry into the nam cache in @p dodag
@@ -210,8 +210,8 @@ void compas_dodag_print(compas_dodag_t *dodag);
  * @return      true, if successful
  * @return      false, if no space left in nam cache
  */
-bool compas_nam_cache_add(compas_dodag_t *dodag, const compas_name_t *name,
-                          const compas_face_t *face);
+bool compas_nam_cache_add(const compas_dodag_t *dodag,
+                          const compas_name_t *name, const compas_face_t *face);
 
 /**
  * @brief Delete an existing entry from the nam cache in @p dodag
@@ -222,7 +222,8 @@ bool compas_nam_cache_add(compas_dodag_t *dodag, const compas_name_t *name,
  * @return      true, if successful
  * @return      false, if no entry with @p name is found
  */
-bool compas_nam_cache_del(compas_dodag_t *dodag, const compas_name_t *name);
+bool compas_nam_cache_del(const compas_dodag_t *dodag,
+                          const compas_name_t *name);
 
 /**
  * @brief Finds an existing entry from the nam cache in @p dodag
@@ -233,7 +234,7 @@ bool compas_nam_cache_del(compas_dodag_t *dodag, const compas_name_t *name);
  * @return      Pointer to the entry, if present
  * @return      NULL, if not present
  */
-compas_nam_cache_entry_t *compas_nam_cache_find(compas_dodag_t *dodag,
+compas_nam_cache_entry_t *compas_nam_cache_find(const compas_dodag_t *dodag,
                                                 const compas_name_t *name);
 /**
  * @brief Checks whether the NAM cache for @p dodag is empty
@@ -243,6 +244,6 @@ compas_nam_cache_entry_t *compas_nam_cache_find(compas_dodag_t *dodag,
  * @return      true, if NAM cache is empty
  * @return      false, otherwise
  */
-bool compas_nam_cache_empty(compas_dodag_t *dodag);
+bool compas_nam_cache_empty(const compas_dodag_t *dodag);
 
 #endif /* COMPAS_ROUTING_DODAG_H */
