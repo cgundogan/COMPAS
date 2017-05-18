@@ -72,11 +72,11 @@ compas_nam_cache_entry_t *compas_nam_cache_find(const compas_dodag_t *dodag,
     for (unsigned i = 0; i < COMPAS_NAM_CACHE_LEN; ++i) {
         n = (compas_nam_cache_entry_t *) &dodag->nam_cache[i];
 
-        if (n->in_use && !memcmp(n->name.name, name->name,
-                                 (n->name.name_len < name->name_len) ?
-                                  n->name.name_len : name->name_len)) {
-            found = n;
-            break;
+        if (n->in_use && (n->name.name_len == name->name_len)) {
+            if (!memcmp(n->name.name, name->name, name->name_len)) {
+                found = n;
+                break;
+            }
         }
     }
 
