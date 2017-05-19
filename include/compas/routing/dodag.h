@@ -144,7 +144,7 @@ static inline bool compas_nam_cache_requested(compas_nam_cache_flags_t flags)
  */
 typedef struct compas_nam_cache_entry {
     bool in_use;                    /**< State of this entry */
-    bool flags;                     /**< Flags for a nam cache entry */
+    compas_nam_cache_flags_t flags; /**< Flags for a nam cache entry */
     compas_name_t name;             /**< Name to request Data with */
     compas_face_t face;             /**< Incoming face of NAM */
     uint8_t retries;                /**< No. of retries to adv. a name */
