@@ -38,7 +38,8 @@ void compas_dodag_print(const compas_dodag_t *dodag)
     CDBG_PRINT("parent_addr_len: %u - parent_addr: ",
                (unsigned) dodag->parent.face.face_addr_len);
 
-    for (unsigned i = 0; i < dodag->parent.face.face_addr_len; i++) {
+    unsigned i;
+    for (i = 0; i < dodag->parent.face.face_addr_len; i++) {
         CDBG_PRINT("%02x ", dodag->parent.face.face_addr[i]);
     }
 

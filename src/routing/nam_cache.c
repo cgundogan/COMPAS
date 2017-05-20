@@ -16,7 +16,8 @@ bool compas_nam_cache_add(const compas_dodag_t *dodag,
     bool done = false;
     compas_nam_cache_entry_t *n, *new = NULL;
 
-    for (unsigned i=0; i < COMPAS_NAM_CACHE_LEN; ++i) {
+    unsigned i;
+    for (i = 0; i < COMPAS_NAM_CACHE_LEN; ++i) {
         n = (compas_nam_cache_entry_t *) &dodag->nam_cache[i];
 
         if (!new && !n->in_use) {
@@ -48,7 +49,8 @@ bool compas_nam_cache_del(const compas_dodag_t *dodag,
     bool done = false;
     compas_nam_cache_entry_t *n;
 
-    for (unsigned i = 0; i < COMPAS_NAM_CACHE_LEN; ++i) {
+    unsigned i;
+    for (i = 0; i < COMPAS_NAM_CACHE_LEN; ++i) {
         n = (compas_nam_cache_entry_t *) &dodag->nam_cache[i];
 
         if (n->in_use && !memcmp(n->name.name, name->name,
@@ -69,7 +71,8 @@ compas_nam_cache_entry_t *compas_nam_cache_find(const compas_dodag_t *dodag,
 {
     compas_nam_cache_entry_t *n, *found = NULL;
 
-    for (unsigned i = 0; i < COMPAS_NAM_CACHE_LEN; ++i) {
+    unsigned i;
+    for (i = 0; i < COMPAS_NAM_CACHE_LEN; ++i) {
         n = (compas_nam_cache_entry_t *) &dodag->nam_cache[i];
 
         if (n->in_use && (n->name.name_len == name->name_len)) {
@@ -86,7 +89,8 @@ compas_nam_cache_entry_t *compas_nam_cache_find(const compas_dodag_t *dodag,
 
 bool compas_nam_cache_empty(const compas_dodag_t *dodag)
 {
-    for (unsigned i = 0; i < COMPAS_NAM_CACHE_LEN; ++i) {
+    unsigned i;
+    for (i = 0; i < COMPAS_NAM_CACHE_LEN; ++i) {
         if(dodag->nam_cache[i].in_use) {
             return false;
         }
