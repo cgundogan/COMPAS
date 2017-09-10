@@ -68,6 +68,12 @@
 /** @} */
 
 /**
+ * @brief Message type for SOL
+ */
+#define COMPAS_MSG_TYPE_SOL         (0xC2)
+/** @} */
+
+/**
  * @name TLV options
  * @{
  */
