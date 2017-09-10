@@ -11,6 +11,7 @@
 #include "unity.h"
 #include "compas/routing/nam.h"
 #include "compas/routing/pam.h"
+#include "compas/routing/sol.h"
 
 #define TEST_PREFIX_LEN (18)
 #define TEST_NAME_LEN (TEST_PREFIX_LEN + 2)
@@ -21,6 +22,8 @@ static const char test_name[TEST_NAME_LEN] = "/HAW/t/te/tes/test/1";
 static char buf_pam[sizeof(compas_pam_t) + TEST_PREFIX_LEN];
 static char buf_nam[sizeof(compas_nam_t) + 3 * sizeof(compas_tlv_t) + \
                     sizeof(uint16_t) + 2 * TEST_PREFIX_LEN];
+static char buf_sol[sizeof(compas_sol_t)];
+
 static const uint8_t face_addr[] = { 0x00, 0x01, 0x02, 0x03, \
                                      0x04, 0x05, 0x06, 0x07 };
 static compas_dodag_t dodag1, dodag2;
@@ -181,6 +184,13 @@ void test_compas_nam_cache(void)
     TEST_ASSERT_TRUE(compas_nam_cache_empty(&dodag1));
 }
 
+void test_compas_sol_create(void)
+{
+    compas_sol_t *sol = (compas_sol_t *) buf_sol;
+    compas_sol_create(sol);
+    TEST_ASSERT_EQUAL_UINT8(sol->type, COMPAS_MSG_TYPE_SOL);
+}
+
 int main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_compas_dodag_init_root);
@@ -193,5 +203,6 @@ int main(void) {
     RUN_TEST(test_compas_nam_tlv_add_lifetime);
     RUN_TEST(test_compas_nam_tlv_iter);
     RUN_TEST(test_compas_nam_cache);
+    RUN_TEST(test_compas_sol_create);
     return UNITY_END();
 }

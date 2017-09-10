@@ -23,5 +23,6 @@ size_t compas_sol_len(void)
 
 void compas_sol_parse(const compas_sol_t *sol)
 {
+    (void) sol;
     return;
 }
