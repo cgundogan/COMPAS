@@ -24,7 +24,7 @@ dependencies    =   $(objects:%.o=%.d)
 rm_binaries     =   $(sources:%.c=%.o)
 
 # set correct include path for .h files
-include_dirs    :=  include
+include_dirs    :=  $(realpath include)
 
 ifneq (, $(filter clean unit-test unit-test-run, $(MAKECMDGOALS)))
 # set correct include path for unity when unit-testing
