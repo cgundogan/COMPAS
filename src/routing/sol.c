@@ -11,9 +11,10 @@
 #include "compas/debug.h"
 #include "compas/routing/sol.h"
 
-void compas_sol_create(compas_sol_t *sol)
+void compas_sol_create(compas_sol_t *sol, uint8_t flags)
 {
     sol->type = COMPAS_MSG_TYPE_SOL;
+    sol->flags = flags;
 }
 
 size_t compas_sol_len(void)
