@@ -17,6 +17,7 @@ void compas_pam_create(const compas_dodag_t *dodag, compas_pam_t *pam)
     pam->type = COMPAS_MSG_TYPE_PAM;
     pam->rank = dodag->rank;
     pam->prefix_len = dodag->prefix.prefix_len;
+    pam->flags = dodag->flags;
     memcpy(pam + 1, dodag->prefix.prefix, dodag->prefix.prefix_len);
 }
 
