@@ -166,7 +166,7 @@ typedef struct {
     uint16_t rank;              /**< Rank of the node */
     compas_prefix_t prefix;     /**< Default Prefix of this DODAG */
     compas_parent_t parent;     /**< Immediate parent in the DODAG */
-                                /**< NAM cache */
+    /** @brief NAM cache */
     compas_nam_cache_entry_t nam_cache[COMPAS_NAM_CACHE_LEN];
 } compas_dodag_t;
 
