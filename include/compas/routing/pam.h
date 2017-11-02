@@ -42,31 +42,36 @@ typedef struct __attribute__((packed)) {
 /**
  * @brief Code for current parent after PAM parsing
  */
-#define COMPAS_PAM_RET_CODE_CURRPARENT      (0)
+#define COMPAS_PAM_RET_CODE_CURRPARENT                  (0)
 /**
  * @brief Code for new parent after PAM parsing
  */
-#define COMPAS_PAM_RET_CODE_NEWPARENT       (1)
+#define COMPAS_PAM_RET_CODE_NEWPARENT                   (1)
 /**
  * @brief Code for ROOT rank
  */
-#define COMPAS_PAM_RET_CODE_ROOTRANK        (2)
+#define COMPAS_PAM_RET_CODE_ROOTRANK                    (2)
 /**
  * @brief Code for MAX rank
  */
-#define COMPAS_PAM_RET_CODE_MAXRANK         (3)
+#define COMPAS_PAM_RET_CODE_MAXRANK                     (3)
 /**
  * @brief Code for outdated DODAG
  */
-#define COMPAS_PAM_RET_CODE_OLDDODAG        (4)
+#define COMPAS_PAM_RET_CODE_OLDDODAG                    (4)
 /**
  * @brief Code for PAM with worse rank
  */
-#define COMPAS_PAM_RET_CODE_WORSERANK       (5)
+#define COMPAS_PAM_RET_CODE_WORSERANK                   (5)
+/**
+ * @brief Code for PAM with worse rank
+ * PAM has non-floating DODAG, while local DODAG is floating
+ */
+#define COMPAS_PAM_RET_CODE_NONFLOATINGDODAG_WORSERANK  (6)
 /**
  * @brief Code for PAM with floating DODAG
  */
-#define COMPAS_PAM_RET_CODE_FLOATINGDODAG   (6)
+#define COMPAS_PAM_RET_CODE_FLOATINGDODAG               (7)
 /** @} */
 
 /**
