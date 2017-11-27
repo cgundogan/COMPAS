@@ -21,6 +21,7 @@
 
 #include "compas/compas.h"
 #include "compas/seq.h"
+#include "compas/trickle.h"
 
 /**
  * @addtogroup configurables
@@ -165,6 +166,7 @@ typedef struct {
     uint8_t flags;              /**< DODAG flags */
     uint8_t sol_num;            /**< Number of sent sols */
     uint16_t rank;              /**< Rank of the node */
+    trickle_t trickle;          /**< Trickle state for this DODAG */
     compas_prefix_t prefix;     /**< Default Prefix of this DODAG */
     compas_parent_t parent;     /**< Immediate parent in the DODAG */
     /** @brief NAM cache */
