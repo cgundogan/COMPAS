@@ -40,6 +40,7 @@ void tearDown(void) {}
 void test_compas_dodag_init_root(void)
 {
     compas_dodag_init_root(&dodag1, test_prefix, TEST_PREFIX_LEN);
+    TEST_ASSERT_EQUAL_UINT8(dodag1.sol_num, 0);
     TEST_ASSERT_EQUAL_UINT16(dodag1.rank, COMPAS_DODAG_ROOT_RANK);
     TEST_ASSERT_EQUAL_UINT16(dodag1.prefix.prefix_len, TEST_PREFIX_LEN);
     TEST_ASSERT_EQUAL_STRING_LEN(dodag1.prefix.prefix, test_prefix, TEST_PREFIX_LEN);
@@ -187,7 +188,7 @@ void test_compas_nam_cache(void)
 void test_compas_sol_create(void)
 {
     compas_sol_t *sol = (compas_sol_t *) buf_sol;
-    compas_sol_create(sol);
+    compas_sol_create(sol, 0);
     TEST_ASSERT_EQUAL_UINT8(sol->type, COMPAS_MSG_TYPE_SOL);
 }
 
