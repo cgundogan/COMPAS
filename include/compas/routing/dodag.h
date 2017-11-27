@@ -163,6 +163,7 @@ typedef struct {
 typedef struct {
     compas_seq8_t freshness;    /**< Uplink freshness */
     uint8_t flags;              /**< DODAG flags */
+    uint8_t sol_num;            /**< Number of sent sols */
     uint16_t rank;              /**< Rank of the node */
     compas_prefix_t prefix;     /**< Default Prefix of this DODAG */
     compas_parent_t parent;     /**< Immediate parent in the DODAG */
