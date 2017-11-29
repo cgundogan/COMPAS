@@ -72,6 +72,10 @@ typedef struct __attribute__((packed)) {
  * @brief Code for PAM with floating DODAG
  */
 #define COMPAS_PAM_RET_CODE_FLOATINGDODAG               (7)
+/**
+ * @brief Code for PAM with worse rank parent
+ */
+#define COMPAS_PAM_RET_CODE_PARENT_WORSERANK            (8)
 /** @} */
 
 /**

@@ -75,7 +75,7 @@ size_t compas_sol_len(void);
 /**
  * @brief Parse SOL @p sol
  *
- * @param[in]   sol             Pointer to PAM to parse from
+ * @param[in]   sol             Pointer to SOL to parse from
  */
 void compas_sol_parse(const compas_sol_t *sol);
 
