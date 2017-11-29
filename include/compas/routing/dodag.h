@@ -155,7 +155,7 @@ typedef struct compas_nam_cache_entry {
  * @brief Definition for DODAG parents
  */
 typedef struct {
-    bool timeout;               /**< timeout state of this parent */
+    bool alive;                 /**< alive state of this parent */
     compas_face_t face;         /**< face to this parent */
 } compas_parent_t;
 
