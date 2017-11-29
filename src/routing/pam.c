@@ -110,8 +110,7 @@ int compas_pam_parse(compas_dodag_t *dodag, const compas_pam_t *pam,
         dodag->rank = pam->rank + 1;
         compas_prefix_init(&dodag->prefix, (char *) (pam + 1), pam->prefix_len);
         compas_face_init(&dodag->parent.face, face_addr, face_addr_len);
-        return res;
     }
 
-    return -1;
+    return res;
 }
