@@ -113,8 +113,9 @@ size_t compas_pam_len(const compas_dodag_t *dodag);
  * @param[in]   face_addr       Face address (e.g. L2 address)
  * @param[in]   face_addr_len   Length of face address @p face_addr
  *
- * @return      0, on parsing PAM from currently selected parent
- * @return      1, on parsing PAM from new parent
+ * @return      @ref COMPAS_PAM_RET_CODE_CURRPARENT, on parsing PAM from currently selected parent
+ * @return      @ref COMPAS_PAM_RET_CODE_NEWPARENT, on parsing PAM from new parent
+ * @return      @ref COMPAS_PAM_RET_CODE_NONFLOATINGDODAG_WORSERANK, on parsing PAM while floating, but neighbor is non-floating.
  * @return      < 0, on failure
  */
 int compas_pam_parse(compas_dodag_t *dodag, const compas_pam_t *pam,
