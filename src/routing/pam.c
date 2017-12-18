@@ -66,7 +66,7 @@ int compas_pam_check(const compas_dodag_t *dodag, const compas_pam_t *pam,
             /* TODO
              * if (dodag->rank <= (pam->rank + 1)) {
              * */
-                if (dodag->rank < pam->rank) {
+                if (dodag->rank <= pam->rank) {
                     CDBG_PRINT("compas_pam_parse: ignore worse ranks\n");
                     return COMPAS_PAM_RET_CODE_WORSERANK;
                 }
