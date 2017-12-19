@@ -10,10 +10,10 @@
 
 #include "compas/routing/dodag.h"
 
-bool compas_nam_cache_add(const compas_dodag_t *dodag,
-                          const compas_name_t *name, const compas_face_t *face)
+compas_nam_cache_entry_t *compas_nam_cache_add(const compas_dodag_t *dodag,
+                                               const compas_name_t *name,
+                                               const compas_face_t *face)
 {
-    bool done = false;
     compas_nam_cache_entry_t *n, *new = NULL;
 
     unsigned i;
@@ -29,7 +29,7 @@ bool compas_nam_cache_add(const compas_dodag_t *dodag,
         }
     }
 
-    if (new && !done) {
+    if (new) {
         new->in_use = true;
         new->retries = COMPAS_NAM_CACHE_RETRIES;
         new->flags = 0;
@@ -37,10 +37,10 @@ bool compas_nam_cache_add(const compas_dodag_t *dodag,
         if (face) {
             new->face = *face;
         }
-        done = true;
+        return new;
     }
 
-    return done;
+    return NULL;
 }
 
 bool compas_nam_cache_del(const compas_dodag_t *dodag,

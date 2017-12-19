@@ -211,11 +211,12 @@ void compas_dodag_print(const compas_dodag_t *dodag);
  * @param[in]   name            Name to store
  * @param[in]   face            Face to store
  *
- * @return      true, if successful
- * @return      false, if no space left in nam cache
+ * @return      Pointer to the new nam cache entry, if successful
+ * @return      NULL, if no space left in nam cache
  */
-bool compas_nam_cache_add(const compas_dodag_t *dodag,
-                          const compas_name_t *name, const compas_face_t *face);
+compas_nam_cache_entry_t *compas_nam_cache_add(const compas_dodag_t *dodag,
+                                               const compas_name_t *name,
+                                               const compas_face_t *face);
 
 /**
  * @brief Delete an existing entry from the nam cache in @p dodag
