@@ -63,10 +63,7 @@ int compas_pam_check(const compas_dodag_t *dodag, const compas_pam_t *pam,
             /* check if freshness is in range */
             if (compas_seq8_cmp(compas_seq8_add(dodag->freshness, 3),
                                 pam->freshness) > 0) {
-            /* TODO
-             * if (dodag->rank <= (pam->rank + 1)) {
-             * */
-                if (dodag->rank <= pam->rank) {
+                if (dodag->rank <= (pam->rank + 1)) {
                     CDBG_PRINT("compas_pam_parse: ignore worse ranks\n");
                     return COMPAS_PAM_RET_CODE_WORSERANK;
                 }
