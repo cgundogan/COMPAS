@@ -63,10 +63,20 @@ int compas_pam_check(const compas_dodag_t *dodag, const compas_pam_t *pam,
             /* check if freshness is in range */
             if (compas_seq8_cmp(compas_seq8_add(dodag->freshness, 3),
                                 pam->freshness) > 0) {
-                if (dodag->rank <= (pam->rank + 1)) {
-                    CDBG_PRINT("compas_pam_parse: ignore worse ranks\n");
-                    return COMPAS_PAM_RET_CODE_WORSERANK;
+                if (dodag->parent.alive) {
+                    if (dodag->rank <= (pam->rank + 1)) {
+                        CDBG_PRINT("compas_pam_parse: ignore worse ranks\n");
+                        return COMPAS_PAM_RET_CODE_WORSERANK;
+                    }
                 }
+                else {
+                    /* allow siblings as parents if parent has timeout */
+                    if (dodag->rank <= pam->rank) {
+                        CDBG_PRINT("compas_pam_parse: ignore worse ranks\n");
+                        return COMPAS_PAM_RET_CODE_WORSERANK;
+                    }
+                }
+
             }
         }
         /* I am not floating, neighbor is */
