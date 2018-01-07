@@ -10,11 +10,6 @@
 #include "assert.h"
 #include "compas/trickle.h"
 
-static inline uint32_t rand_range(uint32_t a, uint32_t  b)
-{
-    return a + (rand() % (b - a));
-}
-
 void trickle_increment_counter(trickle_t *trickle)
 {
     trickle->c++;
@@ -29,7 +24,7 @@ void trickle_init(trickle_t *trickle, uint32_t Imin, uint8_t Imax, uint8_t k)
     trickle->k = k;
     trickle->Imin = Imin;
     trickle->Imax = Imax;
-    trickle->I = trickle->t = rand_range(trickle->Imin, 4 * trickle->Imin);
+    trickle->I = trickle->t = COMPAS_TRICKLE_RAND_RANGE(trickle->Imin, 4 * trickle->Imin);
 }
 
 uint64_t trickle_next(trickle_t *trickle)
@@ -48,7 +43,7 @@ uint64_t trickle_next(trickle_t *trickle)
 
     trickle->c = 0;
     /* old_interval == trickle->I / 2 */
-    trickle->t = rand_range(old_interval, trickle->I);
+    trickle->t = COMPAS_TRICKLE_RAND_RANGE(old_interval, trickle->I);
 
     return (trickle->t + diff);
 }

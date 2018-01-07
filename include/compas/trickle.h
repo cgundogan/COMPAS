@@ -36,6 +36,13 @@ typedef struct {
     uint32_t t;                     /**< time within the current interval */
 } trickle_t;
 
+#ifdef RIOT
+#include "random.h"
+#define COMPAS_TRICKLE_RAND_RANGE(a, b) (random_uint32_range(a, b))
+#else
+#define COMPAS_TRICKLE_RAND_RANGE(a, b) (a + (rand() % (b - a)))
+#endif
+
 /**
  * @brief increments the counter by one
  *
