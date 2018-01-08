@@ -88,6 +88,11 @@
  */
 #define COMPAS_TLV_LIFETIME         (0x01)
 
+/**
+ * @brief TLV option for Name ACKs
+ */
+#define COMPAS_TLV_NAME_ACK         (0x02)
+
 /** @} */
 
 /**

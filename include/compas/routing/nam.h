@@ -47,6 +47,15 @@ void compas_nam_create(compas_nam_t *nam);
 void compas_nam_tlv_add_name(compas_nam_t *nam, const compas_name_t *name);
 
 /**
+ * @brief Add a TLV option with type @ref COMPAS_TLV_NAME_ACK to @p nam
+ * @note Modifies compas_nam_t::len
+ *
+ * @param[in,out]   nam             Pointer to the NAM
+ * @param[in]       name            Name to put into the NAM
+ */
+void compas_nam_tlv_add_name_ack(compas_nam_t *nam, const compas_name_t *name);
+
+/**
  * @brief Add a TLV option with type @ref COMPAS_TLV_LIFETIME to @p nam
  * @note Modifies compas_nam_t::len
  *
