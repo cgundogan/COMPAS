@@ -92,7 +92,7 @@ int compas_pam_check(const compas_dodag_t *dodag, const compas_pam_t *pam,
     }
     else if (dodag->rank <= pam->rank) {
         /* parent has worse rank */
-        CDBG_PRINT("compas_pam_parse: ignore worse rank parent\n");
+        CDBG_PRINT("compas_pam_parse: worse rank parent\n");
         return COMPAS_PAM_RET_CODE_PARENT_WORSERANK;
     }
 
@@ -109,6 +109,7 @@ int compas_pam_parse(compas_dodag_t *dodag, const compas_pam_t *pam,
 
     if ((res == COMPAS_PAM_RET_CODE_CURRPARENT) ||
         (res == COMPAS_PAM_RET_CODE_NEWPARENT)  ||
+        (res == COMPAS_PAM_RET_CODE_PARENT_WORSERANK)  ||
         (res == COMPAS_PAM_RET_CODE_NONFLOATINGDODAG_WORSERANK)) {
         dodag->flags = pam->flags;
         dodag->freshness = pam->freshness;
