@@ -89,13 +89,16 @@ int compas_pam_check(const compas_dodag_t *dodag, const compas_pam_t *pam,
 
         /* TODO
          * if (dodag->rank <= (pam->rank + 1)) {
+         * */
         else {
+            /*
             if (dodag->rank < pam->rank) {
                 CDBG_PRINT("compas_pam_parse: worse rank, but non-floating DODAG\n");
                 return COMPAS_PAM_RET_CODE_NONFLOATINGDODAG_WORSERANK;
             }
+            */
+                return COMPAS_PAM_RET_CODE_NONFLOATINGDODAG_WORSERANK;
         }
-         * */
 
         /* new parent */
         return COMPAS_PAM_RET_CODE_NEWPARENT;
