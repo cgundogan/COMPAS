@@ -72,7 +72,7 @@ int compas_pam_check(const compas_dodag_t *dodag, const compas_pam_t *pam,
                 else {
                     /* allow siblings as parents if parent has timeout */
                     if (dodag->rank <= pam->rank) {
-                        CDBG_PRINT("compas_pam_parse: ignore worse ranks\n");
+                        CDBG_PRINT("compas_pam_parse: ignore worse ranks (timeout)\n");
                         return COMPAS_PAM_RET_CODE_WORSERANK;
                     }
                 }
