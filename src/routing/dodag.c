@@ -44,5 +44,7 @@ void compas_dodag_print(const compas_dodag_t *dodag)
         CDBG_PRINT("%02x ", dodag->parent.face.face_addr[i]);
     }
 
+    CDBG_PRINT("- FLAGS: %2x", dodag->flags);
+
     CDBG_PRINT("\n");
 }
